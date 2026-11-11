@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GRIT Interview Hub — Product Design & Technical Approach</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm 15mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #0F172A;
+      line-height: 1.4;
+      font-size: 9.5pt;
+      margin: 0;
+      padding: 0;
+    }
+    .page {
+      page-break-after: always;
+      height: 270mm;
+      box-sizing: border-box;
+      position: relative;
+    }
+    .page:last-child {
+      page-break-after: avoid;
+    }
+    h1 {
+      font-size: 16pt;
+      margin: 0 0 2pt 0;
+      color: #0F172A;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-size: 8.5pt;
+      color: #475569;
+      margin-bottom: 8pt;
+      border-bottom: 1.5pt solid #E2E8F0;
+      padding-bottom: 4pt;
+    }
+    h2 {
+      font-size: 11pt;
+      color: #1E3A8A;
+      margin: 8pt 0 4pt 0;
+      font-weight: 700;
+      border-bottom: 1px solid #CBD5E1;
+      padding-bottom: 2pt;
+    }
+    h3 {
+      font-size: 9.5pt;
+      color: #0F172A;
+      margin: 6pt 0 2pt 0;
+      font-weight: 700;
+    }
+    p {
+      margin: 0 0 4pt 0;
+      text-align: justify;
+    }
+    ul, ol {
+      margin: 2pt 0 5pt 14pt;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 2pt;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8pt;
+      margin: 4pt 0 6pt 0;
+    }
+    th, td {
+      border: 1px solid #CBD5E1;
+      padding: 3.5pt 5pt;
+      text-align: left;
+    }
+    th {
+      background-color: #F1F5F9;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .code-box {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 4px;
+      padding: 4pt 6pt;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      font-size: 7.5pt;
+      margin: 4pt 0 6pt 0;
+      white-space: pre;
+      line-height: 1.25;
+      color: #0F172A;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 7pt;
+      font-weight: 700;
+      padding: 1pt 3pt;
+      border-radius: 3px;
+      background: #E2E8F0;
+      color: #334155;
+    }
+    .footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 7.5pt;
+      color: #94A3B8;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #E2E8F0;
+      padding-top: 3pt;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1 -->
+  <div class="page">
+    <h1>GRIT Interview Hub — Product Design & Technical Approach</h1>
+    <div class="subtitle">
+      <strong>Role:</strong> Senior Product Engineer &bull; <strong>Platform:</strong> NIAT GRIT &bull; <strong>Scope:</strong> Round 1 Architectural Submission
+    </div>
+
+    <h2>1. Problem Understanding & Core Workflows</h2>
+    <p>
+      GRIT (Global Readiness Immersion Trips) is NIAT's premier skilling contest for engineering students. Participants progress across specialized tracks (<em>AI Models Mastery, Applied GenAI, UI Engineering, Data Science</em>) to earn Track Badges, which qualify top rankers on the Qualiflyer leaderboard for international immersion experiences. Prior to Interview Hub, badge interview scheduling was disconnected from contest progress: students were unsure when they became eligible, interviewers managed fragmented calendars without buffer periods, and operations admins lacked visibility into eligible candidates who dropped out before booking.
+    </p>
+    <p>
+      <strong>GRIT Interview Hub</strong> resolves these issues through three tailored portals:
+    </p>
+    <ul>
+      <li><strong>Student Experience:</strong> Live contest milestone audits, transparent eligibility status, atomic 45-minute slot reservation, safe rescheduling, and constructive candidate feedback inspection without exposing internal notes.</li>
+      <li><strong>Interviewer Workspace:</strong> Weekly availability configuration, buffer-time enforcement, dedicated candidate dossiers with skill rubrics, attendance tracking, and immutable evaluation recording.</li>
+      <li><strong>Admin Operations:</strong> Real-time conversion tracking, immediate unbooked student identification with one-click in-app reminders, interviewer workload balancing, and auditable malpractice investigation.</li>
+    </ul>
+
+    <h2>2. Student Interview Lifecycle & Multi-Dimensional State Machine</h2>
+    <p>
+      To prevent lifecycle corruption, the candidate journey is decoupled across five isolated state dimensions:
+    </p>
+    <div class="code-box">CONTESTS: [Complete 4/4 Skills] ──► ELIGIBILITY: ELIGIBLE ──► BOOKING: BOOKED ──► INTERVIEW: COMPLETED
+                                                           ▲                     ▲
+                                                  (Disputed Flag)                │
+                                                           │           (Evaluator Rubric)
+                                                 REQUIRES_ADMIN_REVIEW           ▼
+                                                                           OUTCOME: PASS / RETAKE / FAIL
+                                                                                 │
+                                                  ┌──────────────────────────────┴──────────────────────────────┐
+                                                  ▼                                                             ▼
+                                      BADGE: AWARDED ──► [Inquiry] ──► UNDER_REVIEW                 RETAKE: 7-Day Cooldown
+                                                                       ┌─────┴─────┐                         (Max 3 Attempts)
+                                                          (Confirmed) ▼           ▼ (Dismissed)
+                                                                  NULLIFIED   REINSTATED</div>
+
+    <h3>Compact State Transition Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Initial State</th>
+          <th>Trigger Event</th>
+          <th>Authorized Actor</th>
+          <th>Resulting State</th>
+          <th>Guards & Invariants</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Eligibility</strong></td>
+          <td>NOT_ELIGIBLE</td>
+          <td>Mandatory skills completed</td>
+          <td>System / Policy Engine</td>
+          <td>ELIGIBLE</td>
+          <td>Evaluates actual contest score (min. 80% passing bar).</td>
+        </tr>
+        <tr>
+          <td><strong>Booking</strong></td>
+          <td>AVAILABLE</td>
+          <td>Candidate confirms slot</td>
+          <td>Student / Admin</td>
+          <td>BOOKED</td>
+          <td>Atomic slot reservation; blocked to all other students.</td>
+        </tr>
+        <tr>
+          <td><strong>Interview</strong></td>
+          <td>SCHEDULED</td>
+          <td>Session ends</td>
+          <td>Assigned Evaluator</td>
+          <td>COMPLETED</td>
+          <td>Evaluator prompted to record structured rubric scores.</td>
+        </tr>
+        <tr>
+          <td><strong>Evaluation</strong></td>
+          <td>COMPLETED</td>
+          <td>Submit official rubric</td>
+          <td>Assigned Evaluator</td>
+          <td>PASS / RETAKE / FAIL</td>
+          <td>Immutable after submission; generates candidate notifications.</td>
+        </tr>
+        <tr>
+          <td><strong>Badge</strong></td>
+          <td>PENDING</td>
+          <td>Pass outcome logged</td>
+          <td>Policy Engine / Admin</td>
+          <td>AWARDED</td>
+          <td>Official credential issued; verified on student profile.</td>
+        </tr>
+        <tr>
+          <td><strong>Integrity</strong></td>
+          <td>AWARDED</td>
+          <td>Malpractice inquiry opened</td>
+          <td>Admin / Evaluator</td>
+          <td>UNDER_REVIEW</td>
+          <td>Neutral notice to candidate; evidence dossier compiled.</td>
+        </tr>
+        <tr>
+          <td><strong>Integrity</strong></td>
+          <td>UNDER_REVIEW</td>
+          <td>Inquiry decision committed</td>
+          <td>Admin (Authorized)</td>
+          <td>NULLIFIED / REINSTATED</td>
+          <td>Formal justification required; full attempt history preserved.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Edge Cases & Safety Policies</h2>
+    <ul>
+      <li><strong>Double Booking Contention:</strong> Two students attempt to reserve the same slot simultaneously. Prevented by database unique exclusion constraints; second attempt fails gracefully with an actionable conflict alert.</li>
+      <li><strong>Post-Booking Invalidation:</strong> Candidate contest is flagged after booking. Eligibility transitions to <code>REQUIRES_ADMIN_REVIEW</code>; interview is placed on administrative hold pending clearance.</li>
+      <li><strong>Retake Cooldown Enforcement:</strong> <code>RETAKE_LATER</code> outcomes enforce a 7-day preparation pause before unlocking re-booking. Hard limit of 3 attempts per badge tier prevents session gaming.</li>
+      <li><strong>Information Isolation:</strong> Private reviewer notes are cryptographically restricted to evaluator and admin scopes, strictly concealed from student API payloads.</li>
+    </ul>
+
+    <div class="footer">
+      <span>GRIT Interview Hub &bull; NIAT Engineering</span>
+      <span>Page 1 of 2</span>
+    </div>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="page">
+    <h2>4. PostgreSQL & Supabase Database Architecture</h2>
+    <p>
+      The architecture utilizes a normalized relational schema with PostgreSQL foreign keys, transactional triggers, and Row Level Security:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Table Name</th>
+          <th>Primary Key</th>
+          <th>Core Foreign Keys</th>
+          <th>Indexes & Integrity Constraints</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>users</code></td>
+          <td><code>id (UUID)</code></td>
+          <td>—</td>
+          <td><code>UNIQUE(email)</code>, <code>CHECK(role IN ('STUDENT','INTERVIEWER','ADMIN'))</code></td>
+        </tr>
+        <tr>
+          <td><code>students</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; users.id</code></td>
+          <td><code>UNIQUE(student_code)</code>, <code>INDEX(qualiflyer_rank)</code></td>
+        </tr>
+        <tr>
+          <td><code>interviewers</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>user_id &rarr; users.id</code></td>
+          <td><code>INDEX(active)</code>, <code>CHECK(max_interviews_per_day &gt; 0)</code></td>
+        </tr>
+        <tr>
+          <td><code>student_badge_journeys</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>student_id, badge_id</code></td>
+          <td><code>UNIQUE(student_id, badge_id)</code>, <code>INDEX(eligibility_status)</code></td>
+        </tr>
+        <tr>
+          <td><code>interview_slots</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>interviewer_id &rarr; interviewers.id</code></td>
+          <td><code>UNIQUE(interviewer_id, start_at)</code>, <code>CHECK(end_at &gt; start_at)</code></td>
+        </tr>
+        <tr>
+          <td><code>interviews</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>journey_id, slot_id, interviewer_id</code></td>
+          <td><code>UNIQUE(slot_id) WHERE booking_status = 'BOOKED'</code> (Double-booking lock)</td>
+        </tr>
+        <tr>
+          <td><code>interview_evaluations</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>interview_id &rarr; interviews.id</code></td>
+          <td><code>UNIQUE(interview_id)</code> (Immutability guarantee)</td>
+        </tr>
+        <tr>
+          <td><code>malpractice_cases</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>journey_id, reported_by, reviewer_id</code></td>
+          <td><code>INDEX(status)</code>, Auditable decision history</td>
+        </tr>
+        <tr>
+          <td><code>audit_logs</code></td>
+          <td><code>id (UUID)</code></td>
+          <td><code>actor_id</code></td>
+          <td>Append-only event log; records entity transitions & justifications</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5. Key Architectural & Product Decisions</h2>
+    <p>
+      <strong>1. Decoupling Evaluation Outcomes from Badge Validity:</strong><br>
+      An interview outcome (<code>PASS</code>, <code>FAIL</code>, <code>RETAKE_LATER</code>) is an immutable evaluation of a technical conversation. Badge validity (<code>AWARDED</code>, <code>UNDER_REVIEW</code>, <code>NULLIFIED</code>, <code>REINSTATED</code>) is an institutional credential state. Separating these ensures that if malpractice is confirmed post-award, the candidate's interview record is never overwritten or deleted, preserving forensic truth.
+    </p>
+    <p>
+      <strong>2. Independent Historical Attempt Logging:</strong><br>
+      Every interview session generates a distinct row in <code>interviews</code> rather than updating previous rows in place. Evaluators assessing a retake candidate can review past technical deficiencies without destroying historical records.
+    </p>
+    <p>
+      <strong>3. Concurrency Protection & Double Booking Prevention:</strong><br>
+      To prevent race conditions when hundreds of candidates rush to reserve slots, the system uses filtered unique indexes on active slot reservations and atomic updates. If two requests collide, the second receives an instant conflict notification.
+    </p>
+    <p>
+      <strong>4. Evaluator Scoping & Permission Isolation:</strong><br>
+      Interviewers cannot view or modify peer availability, modify administrative policies, or award badges directly. Row Level Security policies enforce strict boundaries.
+    </p>
+    <p>
+      <strong>5. Unbooked Student Identification & Outreach:</strong><br>
+      The primary operational metric is the conversion gap between eligible students and confirmed bookings. The Admin table provides real-time filtering for <code>Eligible & Unbooked</code> candidates, with one-click in-app reminders to accelerate qualifying throughput.
+    </p>
+
+    <h2>6. Confirmed Rules vs. Documented Prototype Assumptions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Official GRIT Benchmark</th>
+          <th>Engineering Prototype Assumption</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Track Progression</strong></td>
+          <td>4 tracks: AI Models, GenAI Dev, UI Eng, Data Science.</td>
+          <td>Curated demo cohort of 20 students, 3 interviewers, and 7 badge tiers across tracks.</td>
+        </tr>
+        <tr>
+          <td><strong>Interview Eligibility</strong></td>
+          <td>All mandatory track skill contests must be verified.</td>
+          <td>Minimum 80% passing bar required on skill contests; automated rubric evaluation.</td>
+        </tr>
+        <tr>
+          <td><strong>Session Structure</strong></td>
+          <td>45-minute live technical discussion with dedicated evaluator.</td>
+          <td>15-minute buffer periods automatically enforced between consecutive sessions.</td>
+        </tr>
+        <tr>
+          <td><strong>Retake Parameters</strong></td>
+          <td>Permitted outcomes: Pass, Fail, Retake Later.</td>
+          <td>7-day cooldown duration and 3-attempt lifetime limit per badge level.</td>
+        </tr>
+        <tr>
+          <td><strong>Malpractice Protocol</strong></td>
+          <td>Badges can be nullified later following verified inquiry.</td>
+          <td>Neutral, non-accusatory candidate notices during inquiry; documented rationale required.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <span>GRIT Interview Hub &bull; NIAT Engineering</span>
+      <span>Page 2 of 2</span>
+    </div>
+  </div>
+
+</body>
+</html>
