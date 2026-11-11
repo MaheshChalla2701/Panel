@@ -3,17 +3,8 @@ import { repository } from '../../services/api/repository';
 import { useAuth } from '../../app/providers/AuthContext';
 import { useToast } from '../../app/providers/ToastContext';
 import {
-  Calendar,
-  Clock,
   UserCheck,
-  AlertCircle,
-  ExternalLink,
-  RotateCcw,
-  UserX,
-  UserPlus,
-  Filter,
 } from 'lucide-react';
-import { Interview } from '../../types';
 
 export const InterviewOperations: React.FC = () => {
   const { currentUser } = useAuth();
@@ -70,26 +61,25 @@ export const InterviewOperations: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-              Part 5.4 — Screen 16
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Interview Operations & Reassignment</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Live operational oversight: Manage booked interviews, handle no-shows, and balance interviewer allocations.
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              Interview Operations & Reassignment
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Manage schedule allocations, handle no-shows, and balance evaluator assignments.
             </p>
           </div>
 
           {/* Filter Pills */}
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+          <div className="flex items-center gap-1 bg-zinc-100 p-0.5 rounded-lg text-xs font-medium border border-zinc-200/60">
             {['ALL', 'UPCOMING', 'COMPLETED', 'NO_SHOW', 'CANCELLED'].map((f) => (
               <button
                 key={f}
                 onClick={() => setStatusFilter(f)}
-                className={`px-3 py-1.5 rounded-lg transition capitalize ${
-                  statusFilter === f ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                className={`px-2.5 py-1 rounded transition-colors capitalize ${
+                  statusFilter === f ? 'bg-white text-zinc-950 font-medium shadow-xs' : 'text-zinc-600 hover:text-zinc-900'
                 }`}
               >
                 {f.toLowerCase().replace('_', ' ')}
@@ -100,24 +90,24 @@ export const InterviewOperations: React.FC = () => {
       </div>
 
       {/* Operations Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+            <thead className="bg-zinc-50/70 border-b border-zinc-200/80 text-zinc-500 font-medium uppercase text-[10px] tracking-wider">
               <tr>
-                <th className="py-3.5 px-4">Session Ref</th>
-                <th className="py-3.5 px-4">Candidate & Badge</th>
-                <th className="py-3.5 px-4">Assigned Evaluator</th>
-                <th className="py-3.5 px-4">Timeslot (IST)</th>
-                <th className="py-3.5 px-4">Status</th>
-                <th className="py-3.5 px-4 text-right">Administrative Actions</th>
+                <th className="py-3 px-4">Ref</th>
+                <th className="py-3 px-4">Candidate & Badge</th>
+                <th className="py-3 px-4">Evaluator</th>
+                <th className="py-3 px-4">Timeslot</th>
+                <th className="py-3 px-4">Status</th>
+                <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+            <tbody className="divide-y divide-zinc-100 font-medium text-zinc-700">
               {filteredInterviews.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-12 text-slate-400">
+                  <td colSpan={6} className="text-center py-10 text-zinc-400">
                     No interviews match this filter.
                   </td>
                 </tr>
@@ -125,52 +115,52 @@ export const InterviewOperations: React.FC = () => {
                 filteredInterviews.map((intv) => {
                   const isScheduled = intv.interviewStatus === 'SCHEDULED' || intv.interviewStatus === 'IN_PROGRESS';
                   return (
-                    <tr key={intv.id} className="hover:bg-slate-50/80 transition">
-                      <td className="py-3.5 px-4 font-mono font-bold text-slate-900">
+                    <tr key={intv.id} className="hover:bg-zinc-50/50 transition-colors">
+                      <td className="py-3 px-4 font-mono text-[11px] text-zinc-950">
                         {intv.id.toUpperCase()}
                       </td>
-                      <td className="py-3.5 px-4">
-                        <div className="font-bold text-slate-900">{intv.studentBadgeJourney.student.user.fullName}</div>
-                        <div className="text-[10px] text-slate-400">{intv.studentBadgeJourney.badge.name}</div>
+                      <td className="py-3 px-4">
+                        <div className="font-medium text-zinc-950">{intv.studentBadgeJourney.student.user.fullName}</div>
+                        <div className="text-[10px] text-zinc-400">{intv.studentBadgeJourney.badge.name}</div>
                       </td>
-                      <td className="py-3.5 px-4">
-                        <div className="font-semibold text-slate-800">{intv.interviewer.user.fullName}</div>
-                        <div className="text-[10px] text-slate-400">{intv.interviewer.title}</div>
+                      <td className="py-3 px-4">
+                        <div className="font-medium text-zinc-800">{intv.interviewer.user.fullName}</div>
+                        <div className="text-[10px] text-zinc-400">{intv.interviewer.title}</div>
                       </td>
-                      <td className="py-3.5 px-4">
-                        <div className="font-bold text-slate-800">
+                      <td className="py-3 px-4">
+                        <div className="font-medium text-zinc-900">
                           {new Date(intv.scheduledStart).toLocaleDateString()}
                         </div>
-                        <div className="text-[10px] text-slate-500">
-                          {new Date(intv.scheduledStart).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} &ndash;{' '}
+                        <div className="text-[10px] text-zinc-400">
+                          {new Date(intv.scheduledStart).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} –{' '}
                           {new Date(intv.scheduledEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </div>
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-3 px-4">
                         <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
+                          className={`text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                             isScheduled
-                              ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                              ? 'bg-zinc-100 text-zinc-700 border-zinc-200/80'
                               : intv.interviewStatus === 'COMPLETED'
-                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200/60'
                               : intv.interviewStatus === 'NO_SHOW'
-                              ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                              : 'bg-slate-100 text-slate-600'
+                              ? 'bg-rose-50 text-rose-700 border-rose-200/60'
+                              : 'bg-zinc-50 text-zinc-500 border-zinc-200/60'
                           }`}
                         >
                           {intv.interviewStatus.replace('_', ' ')}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-right">
+                      <td className="py-3 px-4 text-right">
                         {isScheduled && (
                           <button
                             onClick={() => {
                               setReassignModalTarget(intv);
                               setNewInterviewerId(intv.interviewerId);
                             }}
-                            className="inline-flex items-center gap-1 border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-[11px] px-2.5 py-1 rounded-lg transition"
+                            className="inline-flex items-center gap-1 border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-medium text-[11px] px-2.5 py-1 rounded transition-colors shadow-xs"
                           >
-                            <UserCheck className="w-3.5 h-3.5 text-blue-600" /> Reassign
+                            <UserCheck className="w-3.5 h-3.5 text-zinc-500" /> Reassign
                           </button>
                         )}
                       </td>
@@ -185,20 +175,20 @@ export const InterviewOperations: React.FC = () => {
 
       {/* Admin Reassignment Modal */}
       {reassignModalTarget && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 animate-in zoom-in-95">
-            <h3 className="text-base font-bold text-slate-900">Admin Evaluator Reassignment</h3>
-            <p className="text-xs text-slate-500">
+        <div className="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-sm w-full p-5 shadow-elevated border border-zinc-200 space-y-3.5 animate-in zoom-in-95">
+            <h3 className="text-sm font-semibold text-zinc-950">Reassign Evaluator</h3>
+            <p className="text-xs text-zinc-500">
               Reassign candidate <strong>{reassignModalTarget.studentBadgeJourney.student.user.fullName}</strong> to another qualified evaluator.
             </p>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-2.5 text-xs">
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Select Evaluator</label>
+                <label className="block text-zinc-600 font-medium mb-1">Evaluator</label>
                 <select
                   value={newInterviewerId}
                   onChange={(e) => setNewInterviewerId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-800"
+                  className="w-full border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-zinc-800 text-xs"
                 >
                   {interviewers.map((i) => (
                     <option key={i.id} value={i.id}>
@@ -209,27 +199,27 @@ export const InterviewOperations: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Reason for Administrative Reassignment</label>
+                <label className="block text-zinc-600 font-medium mb-1">Reason</label>
                 <input
                   type="text"
                   value={reassignReason}
                   onChange={(e) => setReassignReason(e.target.value)}
-                  placeholder="e.g. Workload balancing, evaluator emergency..."
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 bg-slate-50"
+                  placeholder="e.g. Workload balancing..."
+                  className="w-full border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-xs"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-zinc-100">
               <button
                 onClick={() => setReassignModalTarget(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                className="px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-100"
               >
                 Cancel
               </button>
               <button
                 onClick={handleReassign}
-                className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs"
+                className="px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs shadow-xs"
               >
                 Confirm Reassignment
               </button>

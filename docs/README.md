@@ -136,3 +136,4 @@ npm run build
 - **State Machine Spec:** [`docs/architecture/STATE_MACHINE.md`](./architecture/STATE_MACHINE.md)
 - **Edge Cases & Assumptions:** [`docs/submission/EDGE_CASES_AND_ASSUMPTIONS.md`](./submission/EDGE_CASES_AND_ASSUMPTIONS.md)
 - **Demo Verification Checklist:** [`docs/submission/DEMO_CHECKLIST.md`](./submission/DEMO_CHECKLIST.md)
+

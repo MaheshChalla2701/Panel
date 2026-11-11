@@ -4,7 +4,6 @@ import { repository } from '../../services/api/repository';
 import { useToast } from '../../app/providers/ToastContext';
 import { useNavigate } from 'react-router-dom';
 import {
-  Calendar as CalendarIcon,
   Clock,
   User,
   ShieldCheck,
@@ -12,10 +11,8 @@ import {
   CheckCircle2,
   Filter,
   ArrowRight,
-  Info,
-  CalendarCheck,
 } from 'lucide-react';
-import { InterviewSlot, Interview } from '../../types';
+import { Interview } from '../../types';
 
 export const InterviewBooking: React.FC = () => {
   const { currentUser } = useAuth();
@@ -67,7 +64,6 @@ export const InterviewBooking: React.FC = () => {
 
     setBookingInProgress(true);
 
-    // Call atomic transactional booking in repository
     const result = repository.bookInterviewSlot({
       studentId: student.id,
       journeyId: primaryJourney.id,
@@ -81,7 +77,7 @@ export const InterviewBooking: React.FC = () => {
       setConfirmedInterview(result.interview);
       toast({
         type: 'success',
-        title: 'Interview Confirmed!',
+        title: 'Interview Confirmed',
         message: 'Your slot has been reserved successfully.',
       });
     } else {
@@ -108,67 +104,67 @@ export const InterviewBooking: React.FC = () => {
     });
 
     return (
-      <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in-50">
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
-            <CalendarCheck className="w-9 h-9" />
+      <div className="max-w-xl mx-auto space-y-6 animate-in fade-in-50 pt-4">
+        <div className="bg-white rounded-xl border border-zinc-200/80 p-6 sm:p-8 shadow-xs text-center space-y-5">
+          <div className="w-10 h-10 rounded-full bg-zinc-100 text-zinc-900 mx-auto flex items-center justify-center">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
           </div>
 
           <div>
-            <div className="text-xs uppercase font-bold text-emerald-600 tracking-wider">
-              Part 5.2 — Screen 4 &bull; Official Confirmation
-            </div>
-            {/* Part 7 Exact Message 2 Title */}
-            <h1 className="text-2xl font-black text-slate-900 mt-1">Your interview is confirmed!</h1>
-            {/* Part 7 Exact Message 2 Body */}
-            <p className="text-sm text-slate-600 max-w-lg mx-auto mt-2 leading-relaxed">
-              "Your {badge?.track.name} – {badge?.name} interview is scheduled for {formattedDate} at {formattedTime} (Asia/Kolkata - IST). Your interviewer and meeting details are available below. Please join a few minutes early."
+            <span className="text-[10px] uppercase font-medium text-zinc-400 tracking-wider">
+              Booking Confirmation
+            </span>
+            <h1 className="text-xl font-semibold text-zinc-950 mt-1">
+              Your interview is confirmed!
+            </h1>
+            <p className="text-xs text-zinc-600 max-w-md mx-auto mt-2 leading-relaxed">
+              "Your Track Badge interview has been confirmed for {formattedDate} at {formattedTime}. Please review the technical focus areas for your badge level and ensure your development environment is prepared. You can reschedule or cancel up to 24 hours before your scheduled time."
             </p>
           </div>
 
           {/* Details Card */}
-          <div className="p-5 bg-slate-50 rounded-xl border border-slate-200 text-left text-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-200">
-              <span className="text-slate-500">Booking Reference</span>
-              <span className="font-mono font-bold text-slate-900">{confirmedInterview.id.toUpperCase()}</span>
+          <div className="p-4 bg-zinc-50 rounded-lg border border-zinc-200/60 text-left text-xs space-y-2.5">
+            <div className="flex items-center justify-between pb-2 border-b border-zinc-200/60">
+              <span className="text-zinc-500">Booking Reference</span>
+              <span className="font-mono font-medium text-zinc-950">{confirmedInterview.id.toUpperCase()}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-500">Assigned Evaluator</span>
-              <span className="font-bold text-slate-900">{intvObj?.interviewer.user.fullName}</span>
+              <span className="text-zinc-500">Evaluator</span>
+              <span className="font-medium text-zinc-900">{intvObj?.interviewer.user.fullName}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-500">Meeting Room Link</span>
+              <span className="text-zinc-500">Meeting Room</span>
               <a
                 href={confirmedInterview.meetingLink}
                 target="_blank"
                 rel="noreferrer"
-                className="text-blue-600 hover:underline font-semibold"
+                className="text-zinc-900 underline font-medium"
               >
-                {confirmedInterview.meetingLink}
+                Launch Room
               </a>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-500">Passcode</span>
-              <span className="font-mono font-bold text-slate-700">{confirmedInterview.meetingPasscode || 'GRIT2026'}</span>
+              <span className="text-zinc-500">Passcode</span>
+              <span className="font-mono font-medium text-zinc-700">{confirmedInterview.meetingPasscode || 'GRIT2026'}</span>
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-slate-200 text-[11px] text-slate-500">
-              <span>Cancellation Policy</span>
-              <span>Free cancellation up to 2 hours before scheduled slot</span>
+            <div className="flex items-center justify-between pt-2 border-t border-zinc-200/60 text-[11px] text-zinc-400">
+              <span>Policy</span>
+              <span>Cancellation allowed up to 24h prior</span>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
             <button
               onClick={() => navigate('/my-interviews')}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs transition-colors shadow-xs"
             >
               View Interview Details
             </button>
             <button
               onClick={() => navigate('/')}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-medium text-xs transition-colors"
             >
-              Return to Student Home
+              Return Home
             </button>
           </div>
         </div>
@@ -182,21 +178,19 @@ export const InterviewBooking: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Title Card */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-              Part 5.2 — Screen 3
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Book Live Badge Interview</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Target Badge:{' '}
-              <strong className="text-slate-800">{badge?.name}</strong> &bull; Slot Duration: 45 Minutes &bull; Timezone: Asia/Kolkata (IST)
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              Book Live Badge Interview
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Target: <span className="text-zinc-800 font-medium">{badge?.name}</span> • 45 Minutes • Timezone: Asia/Kolkata (IST)
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+          <div>
+            <span className="text-xs font-mono font-medium px-2.5 py-1 rounded bg-zinc-100 text-zinc-700 border border-zinc-200/60">
               Attempt #{primaryJourney?.currentAttemptNumber ? primaryJourney.currentAttemptNumber + 1 : 1} of 3
             </span>
           </div>
@@ -204,27 +198,26 @@ export const InterviewBooking: React.FC = () => {
       </div>
 
       {!isEligible && (
-        <div className="bg-rose-50 border border-rose-200 p-4 rounded-xl flex items-center gap-3 text-xs text-rose-900">
-          <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
+        <div className="bg-zinc-50 border border-zinc-200/80 p-4 rounded-xl flex items-center gap-3 text-xs text-zinc-700">
+          <AlertCircle className="w-4 h-4 text-zinc-400 shrink-0" />
           <div>
-            <strong>Booking Currently Inaccessible:</strong> Your current status is{' '}
-            <span className="font-bold uppercase">{primaryJourney?.eligibilityStatus}</span>. You must complete and verify all mandatory skill contests before booking an interview slot.
+            <strong className="text-zinc-900">Booking Currently Inaccessible:</strong> Complete and verify all mandatory skill contests before booking an interview slot.
           </div>
         </div>
       )}
 
-      {/* Booking Filter Controls */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-700 uppercase tracking-wider">
-          <Filter className="w-4 h-4 text-slate-500" />
-          Filter Available Timeslots
+      {/* Date & Filter Controls */}
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-4 shadow-xs space-y-3">
+        <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 uppercase tracking-wider">
+          <Filter className="w-3.5 h-3.5" />
+          Filter Timeslots
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Date Picker Buttons */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Select Interview Date</label>
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            <label className="block text-[11px] font-medium text-zinc-500 mb-1">Select Date</label>
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
               {availableDates.map((dateStr) => {
                 const d = new Date(dateStr);
                 const isSelected = selectedDate === dateStr;
@@ -236,14 +229,14 @@ export const InterviewBooking: React.FC = () => {
                       setSelectedDate(dateStr);
                       setSelectedSlot(null);
                     }}
-                    className={`px-3.5 py-2 rounded-xl text-xs font-bold text-center border transition min-w-24 ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-medium text-center border transition-colors min-w-20 ${
                       isSelected
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                        ? 'bg-zinc-900 text-white border-zinc-900 shadow-xs'
+                        : 'bg-white text-zinc-700 border-zinc-200/80 hover:bg-zinc-50'
                     }`}
                   >
-                    <div>{d.toLocaleDateString('en-US', { weekday: 'short' })}</div>
-                    <div className="text-sm font-black">{d.getDate()} {d.toLocaleDateString('en-US', { month: 'short' })}</div>
+                    <div className="text-[10px] text-zinc-400">{d.toLocaleDateString('en-US', { weekday: 'short' })}</div>
+                    <div className="font-semibold">{d.getDate()} {d.toLocaleDateString('en-US', { month: 'short' })}</div>
                   </button>
                 );
               })}
@@ -252,14 +245,14 @@ export const InterviewBooking: React.FC = () => {
 
           {/* Evaluator Filter */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">Interviewer Preference</label>
+            <label className="block text-[11px] font-medium text-zinc-500 mb-1">Evaluator</label>
             <select
               value={selectedInterviewerId}
               onChange={(e) => {
                 setSelectedInterviewerId(e.target.value);
                 setSelectedSlot(null);
               }}
-              className="w-full text-xs font-medium border border-slate-200 rounded-xl px-3 py-2.5 bg-slate-50 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-xs font-medium border border-zinc-200/80 rounded-lg px-2.5 py-2 bg-white text-zinc-800 focus:outline-none focus:ring-1 focus:ring-zinc-900"
             >
               <option value="ALL">Any Available Senior Evaluator</option>
               {interviewers.map((i) => (
@@ -273,22 +266,22 @@ export const InterviewBooking: React.FC = () => {
       </div>
 
       {/* Slots Grid */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">
-            Available Slots for {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+          <h3 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider">
+            Available Slots ({filteredSlots.filter((s) => s.status === 'AVAILABLE').length})
           </h3>
-          <span className="text-xs text-slate-500">
-            {filteredSlots.filter((s) => s.status === 'AVAILABLE').length} bookable slots found
+          <span className="text-[11px] text-zinc-400">
+            {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
           </span>
         </div>
 
         {filteredSlots.length === 0 ? (
-          <div className="p-8 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">
-            No interview slots scheduled on this date for the selected criteria. Please choose another date.
+          <div className="p-8 text-center text-xs text-zinc-400 bg-zinc-50 rounded-lg border border-zinc-200/60">
+            No interview slots scheduled on this date.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {filteredSlots.map((slot) => {
               const isAvailable = slot.status === 'AVAILABLE';
               const isSelected = selectedSlot?.id === slot.id;
@@ -300,34 +293,35 @@ export const InterviewBooking: React.FC = () => {
                   key={slot.id}
                   disabled={!isAvailable || !isEligible}
                   onClick={() => handleSelectSlot(slot)}
-                  className={`p-4 rounded-xl border text-left transition relative ${
+                  className={`p-3 rounded-lg border text-left transition-colors relative ${
                     isSelected
-                      ? 'bg-blue-50/80 border-blue-600 ring-2 ring-blue-500 shadow-sm'
+                      ? 'bg-zinc-900 text-white border-zinc-900 shadow-xs'
                       : isAvailable && isEligible
-                      ? 'bg-white border-slate-200 hover:border-blue-400 hover:bg-slate-50 cursor-pointer'
-                      : 'bg-slate-100/70 border-slate-200 opacity-60 cursor-not-allowed'
+                      ? 'bg-white border-zinc-200/80 hover:border-zinc-400 cursor-pointer'
+                      : 'bg-zinc-50 border-zinc-200/60 opacity-50 cursor-not-allowed'
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-blue-600" />
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-semibold flex items-center gap-1.5">
+                      <Clock className={`w-3.5 h-3.5 ${isSelected ? 'text-zinc-300' : 'text-zinc-400'}`} />
                       {startTime} – {endTime}
                     </span>
                     <span
-                      className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded ${
-                        isAvailable ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-200 text-slate-600'
+                      className={`text-[10px] font-medium px-1.5 py-0.2 rounded ${
+                        isSelected
+                          ? 'bg-zinc-800 text-zinc-200'
+                          : isAvailable
+                          ? 'bg-emerald-50 text-emerald-700'
+                          : 'bg-zinc-100 text-zinc-500'
                       }`}
                     >
                       {isAvailable ? 'Available' : 'Reserved'}
                     </span>
                   </div>
 
-                  <div className="text-[11px] text-slate-600 flex items-center gap-1.5">
-                    <User className="w-3.5 h-3.5 text-slate-400" />
+                  <div className={`text-[11px] flex items-center gap-1.5 ${isSelected ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                    <User className="w-3 h-3 text-zinc-400" />
                     <span>{slot.interviewer.user.fullName}</span>
-                  </div>
-                  <div className="text-[10px] text-slate-400 truncate mt-0.5">
-                    {slot.interviewer.title}
                   </div>
                 </button>
               );
@@ -337,10 +331,10 @@ export const InterviewBooking: React.FC = () => {
 
         {/* Selected Slot Confirmation Bar */}
         {selectedSlot && (
-          <div className="mt-6 p-4 rounded-xl bg-blue-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in slide-in-from-bottom-2">
+          <div className="mt-4 p-3.5 rounded-lg bg-zinc-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in slide-in-from-bottom-2">
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-blue-200">Selected Timeslot</div>
-              <div className="text-sm font-extrabold mt-0.5">
+              <div className="text-[10px] uppercase tracking-wider text-zinc-400 font-medium">Selected Slot</div>
+              <div className="text-xs font-medium mt-0.5">
                 {new Date(selectedSlot.startAt).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} at{' '}
                 {new Date(selectedSlot.startAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}{' '}
                 {selectedSlot.interviewer ? `with ${selectedSlot.interviewer.user.fullName}` : ''}
@@ -350,23 +344,23 @@ export const InterviewBooking: React.FC = () => {
             <button
               onClick={handleConfirmBooking}
               disabled={bookingInProgress}
-              className="inline-flex items-center justify-center gap-2 bg-white text-blue-900 hover:bg-blue-50 font-bold text-xs px-6 py-2.5 rounded-xl transition shadow shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 bg-white text-zinc-900 hover:bg-zinc-100 font-medium text-xs px-4 py-2 rounded-lg transition-colors shrink-0"
             >
-              {bookingInProgress ? 'Reserving Slot...' : 'Confirm & Reserve Slot'}
-              <ArrowRight className="w-4 h-4" />
+              {bookingInProgress ? 'Reserving...' : 'Confirm & Reserve Slot'}
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         )}
       </div>
 
-      {/* Policy and Concurrency Protection Notice */}
-      <div className="bg-slate-50 rounded-2xl border border-slate-200/80 p-5 text-xs text-slate-600 space-y-2">
-        <div className="font-bold text-slate-900 flex items-center gap-1.5">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+      {/* Policy Footnote */}
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-4 text-xs text-zinc-500 space-y-1 shadow-xs">
+        <div className="font-medium text-zinc-900 flex items-center gap-1.5">
+          <ShieldCheck className="w-3.5 h-3.5 text-zinc-500" />
           Transactional Booking Protection
         </div>
-        <p className="text-[11px] leading-relaxed text-slate-500">
-          Slots are reserved atomically. If two candidates attempt to confirm the same slot simultaneously, only the first request succeeds; subsequent attempts will receive an instant conflict notice to select an alternate time without data corruption.
+        <p className="text-[11px] leading-relaxed text-zinc-500">
+          Slots are allocated atomically. If two candidates submit simultaneously, the engine confirms the first commit and notifies the second safely without state corruption.
         </p>
       </div>
     </div>

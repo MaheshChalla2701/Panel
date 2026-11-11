@@ -1115,3 +1115,4 @@ export const SEED_AUDIT_LOGS: AuditLog[] = [
     createdAt: '2026-11-09T10:30:00Z',
   },
 ];
+

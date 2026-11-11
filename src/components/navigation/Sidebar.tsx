@@ -8,13 +8,10 @@ import {
   Clock,
   Award,
   Users,
-  Settings,
   ShieldCheck,
-  FileSpreadsheet,
   CalendarRange,
   History,
   FileCheck2,
-  BookOpen,
   UserCheck,
 } from 'lucide-react';
 
@@ -30,7 +27,7 @@ export const Sidebar: React.FC = () => {
   }
 
   const studentLinks: NavItem[] = [
-    { to: '/', label: 'Student Home', icon: LayoutDashboard },
+    { to: '/', label: 'Overview', icon: LayoutDashboard },
     { to: '/badge-eligibility', label: 'Badge Eligibility', icon: CheckSquare },
     { to: '/book-interview', label: 'Book Interview', icon: Calendar },
     { to: '/my-interviews', label: 'My Interviews', icon: Clock },
@@ -38,42 +35,37 @@ export const Sidebar: React.FC = () => {
   ];
 
   const interviewerLinks: NavItem[] = [
-    { to: '/interviewer', label: 'Interviewer Dashboard', icon: LayoutDashboard },
+    { to: '/interviewer', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/interviewer/availability', label: 'Manage Availability', icon: CalendarRange },
-    { to: '/interviewer/schedule', label: 'Daily & Weekly Schedule', icon: Calendar },
+    { to: '/interviewer/schedule', label: 'Schedule', icon: Calendar },
     { to: '/interviewer/evaluations', label: 'Evaluation Records', icon: FileCheck2 },
   ];
 
   const adminLinks: NavItem[] = [
     { to: '/admin', label: 'Operations Overview', icon: LayoutDashboard },
-    { to: '/admin/eligible-students', label: 'Eligible Students', icon: Users, badge: 'Key' },
-    { to: '/admin/interviews', label: 'Interview Operations', icon: Calendar },
-    { to: '/admin/interviewers', label: 'Interviewer Capacity', icon: UserCheck },
+    { to: '/admin/eligible-students', label: 'Eligible Students', icon: Users, badge: 'Pipeline' },
+    { to: '/admin/interviews', label: 'Schedule Operations', icon: Calendar },
+    { to: '/admin/interviewers', label: 'Interviewer Roster', icon: UserCheck },
     { to: '/admin/malpractice', label: 'Malpractice Inquiries', icon: ShieldCheck },
-    { to: '/admin/audit-logs', label: 'System Audit Log', icon: History },
+    { to: '/admin/audit-logs', label: 'Audit Log', icon: History },
   ];
 
   const links = role === 'STUDENT' ? studentLinks : role === 'INTERVIEWER' ? interviewerLinks : adminLinks;
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col flex-shrink-0 min-h-[calc(100vh-64px)]">
-      {/* Role Indicator Banner */}
-      <div className="p-4 border-b border-slate-100">
-        <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
-          Active Workspace
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="font-bold text-slate-900 text-sm capitalize">
-            {role.toLowerCase()} Portal
-          </span>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
-            v1.0
-          </span>
-        </div>
+    <aside className="w-60 bg-white/60 border-r border-zinc-200/80 hidden md:flex flex-col flex-shrink-0 min-h-[calc(100vh-56px)]">
+      {/* Workspace Role Label */}
+      <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between">
+        <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">
+          {role.toLowerCase()}
+        </span>
+        <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-600 border border-zinc-200/60">
+          Workspace
+        </span>
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 p-3 space-y-1">
+      <nav className="flex-1 p-2 space-y-0.5">
         {links.map((link) => {
           const Icon = link.icon;
           return (
@@ -82,19 +74,19 @@ export const Sidebar: React.FC = () => {
               to={link.to}
               end={link.to === '/' || link.to === '/interviewer' || link.to === '/admin'}
               className={({ isActive }) =>
-                `flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition ${
+                `flex items-center justify-between px-3 py-2 rounded-md text-xs transition-colors ${
                   isActive
-                    ? 'bg-blue-50 text-blue-700 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'bg-zinc-100 text-zinc-950 font-medium'
+                    : 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50'
                 }`
               }
             >
-              <div className="flex items-center gap-3">
-                <Icon className="w-4 h-4 shrink-0" />
+              <div className="flex items-center gap-2.5">
+                <Icon className="w-4 h-4 shrink-0 text-zinc-400 group-hover:text-zinc-600" />
                 <span>{link.label}</span>
               </div>
               {link.badge && (
-                <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold">
+                <span className="text-[10px] bg-zinc-100 text-zinc-600 px-1.5 py-0.2 rounded font-medium border border-zinc-200/80">
                   {link.badge}
                 </span>
               )}
@@ -103,15 +95,10 @@ export const Sidebar: React.FC = () => {
         })}
       </nav>
 
-      {/* Sidebar Footer: Quick Documentation Link */}
-      <div className="p-4 border-t border-slate-100 text-[11px] text-slate-500 space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="font-semibold text-slate-700">NIAT GRIT Program</span>
-          <span className="text-emerald-600 font-bold">Live</span>
-        </div>
-        <p className="text-[10px] text-slate-400 leading-normal">
-          AI Models, Applied GenAI, UI Engineering & Data Science Tracks.
-        </p>
+      {/* Subtle Footer Note */}
+      <div className="p-4 border-t border-zinc-100 text-[11px] text-zinc-400">
+        <div>GRIT Platform 2026</div>
+        <div className="text-[10px] text-zinc-400/80 mt-0.5">NIAT Academic Integrity</div>
       </div>
     </aside>
   );

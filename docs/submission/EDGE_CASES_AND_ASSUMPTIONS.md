@@ -43,3 +43,4 @@
 | **Evaluator Outcomes** | Permitted outcomes are Pass, Fail, Retake Later. | Passing triggers automated badge award issuance; Retake triggers 7-day cooldown. |
 | **Attempt Limits** | Cooldown and maximum attempts not quantitatively specified in official guidelines. | Configured 7-day cooldown and 3-attempt ceiling as realistic educational defaults. |
 | **Malpractice Policy** | A badge already earned can be nullified later if malpractice is reported and confirmed. | Neutral, non-accusatory notifications used during active reviews; formal justification required for nullification. |
+

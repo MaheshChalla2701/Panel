@@ -142,3 +142,4 @@ All state transitions are validated by centralized pure functions in `src/domain
 - `canTransitionMalpractice(from, to, actorRole)`
 
 Any attempt by a UI component or unauthorized user to bypass business logic is rejected with a descriptive error message and recorded in the append-only audit log.
+

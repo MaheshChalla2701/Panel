@@ -214,3 +214,4 @@ WHERE (booking_status = 'BOOKED' AND interview_status IN ('SCHEDULED', 'STUDENT_
 - **Students:** Can only read their own journeys, bookings, and public feedback; blocked from seeing other students and private evaluator notes.
 - **Interviewers:** Can only access candidate records and submit evaluations for interviews assigned to them. Cannot modify peer availability or award badges directly.
 - **Admins:** Full read/write operational access across all tables.
+

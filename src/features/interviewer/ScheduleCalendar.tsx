@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../app/providers/AuthContext';
 import { repository } from '../../services/api/repository';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
-  Calendar as CalendarIcon,
   Clock,
-  User,
   ExternalLink,
   ChevronLeft,
   ChevronRight,
-  Filter,
-  CheckCircle2,
 } from 'lucide-react';
-import { Interview } from '../../types';
 
 export const ScheduleCalendar: React.FC = () => {
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
   const [, setTick] = useState(0);
 
   useEffect(() => {
@@ -26,7 +20,7 @@ export const ScheduleCalendar: React.FC = () => {
   const interviewer = repository.getInterviewerByUserId(currentUser.id) || repository.getInterviewers()[0];
   const interviews = repository.getInterviews().filter((i) => i.interviewerId === interviewer.id);
 
-  const [viewMode, setViewMode] = useState<'DAY' | 'WEEK' | 'LIST'>('LIST');
+  const [viewMode, setViewMode] = useState<'DAY' | 'LIST'>('LIST');
   const [currentDate, setCurrentDate] = useState<string>('2026-11-11');
 
   const filteredInterviews = interviews.filter((i) => {
@@ -39,159 +33,139 @@ export const ScheduleCalendar: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-              Part 5.3 — Screen 11
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Interviewer Daily & Weekly Schedule</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Evaluator: <strong className="text-slate-800">{interviewer.user.fullName}</strong> &bull; Total Assigned Interviews: {interviews.length}
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              Schedule & Calendar
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Assigned sessions for {interviewer.user.fullName} ({interviews.length} total)
             </p>
           </div>
 
-          {/* View Toggles */}
+          <div className="flex items-center gap-1 bg-zinc-100 p-0.5 rounded-lg text-xs font-medium border border-zinc-200/60">
+            {(['LIST', 'DAY'] as const).map((mode) => (
+              <button
+                key={mode}
+                onClick={() => setViewMode(mode)}
+                className={`px-3 py-1 rounded transition-colors capitalize ${
+                  viewMode === mode ? 'bg-white text-zinc-950 font-medium shadow-xs' : 'text-zinc-600 hover:text-zinc-900'
+                }`}
+              >
+                {mode.toLowerCase()} View
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Date Navigation Bar (if DAY mode) */}
+      {viewMode === 'DAY' && (
+        <div className="bg-white rounded-xl border border-zinc-200/80 p-3 shadow-xs flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-bold">
-              {(['LIST', 'DAY', 'WEEK'] as const).map((mode) => (
-                <button
-                  key={mode}
-                  onClick={() => setViewMode(mode)}
-                  className={`px-3 py-1.5 rounded-lg transition capitalize ${
-                    viewMode === mode ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  {mode.toLowerCase()} View
-                </button>
-              ))}
-            </div>
+            <button
+              onClick={() => {
+                const d = new Date(currentDate);
+                d.setDate(d.getDate() - 1);
+                setCurrentDate(d.toISOString().split('T')[0]);
+              }}
+              className="p-1 rounded hover:bg-zinc-100 text-zinc-500"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="text-xs font-medium text-zinc-950">
+              {new Date(currentDate).toLocaleDateString('en-US', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </span>
+            <button
+              onClick={() => {
+                const d = new Date(currentDate);
+                d.setDate(d.getDate() + 1);
+                setCurrentDate(d.toISOString().split('T')[0]);
+              }}
+              className="p-1 rounded hover:bg-zinc-100 text-zinc-500"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
-        </div>
-      </div>
 
-      {/* Date Navigation Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
-        <div className="flex items-center gap-2">
           <button
-            onClick={() => {
-              const d = new Date(currentDate);
-              d.setDate(d.getDate() - 1);
-              setCurrentDate(d.toISOString().split('T')[0]);
-            }}
-            className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600"
+            onClick={() => setCurrentDate('2026-11-11')}
+            className="text-[11px] text-zinc-500 hover:text-zinc-900 font-medium px-2 py-0.5 rounded hover:bg-zinc-100"
           >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <span className="text-xs font-bold text-slate-900">
-            {new Date(currentDate).toLocaleDateString('en-US', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </span>
-          <button
-            onClick={() => {
-              const d = new Date(currentDate);
-              d.setDate(d.getDate() + 1);
-              setCurrentDate(d.toISOString().split('T')[0]);
-            }}
-            className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-600"
-          >
-            <ChevronRight className="w-5 h-5" />
+            Today
           </button>
         </div>
+      )}
 
-        <button
-          onClick={() => setCurrentDate('2026-11-11')}
-          className="text-xs font-semibold text-blue-600 hover:text-blue-800"
-        >
-          Jump to Today (11 Nov)
-        </button>
-      </div>
-
-      {/* Interviews Grid / List */}
-      <div className="space-y-3">
-        {filteredInterviews.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-xs text-slate-400">
-            No interview sessions scheduled for this period.
-          </div>
-        ) : (
-          filteredInterviews.map((intv) => {
-            const isCompleted = intv.interviewStatus === 'COMPLETED';
-            const isNoShow = intv.interviewStatus === 'NO_SHOW';
-            const isScheduled = intv.interviewStatus === 'SCHEDULED' || intv.interviewStatus === 'IN_PROGRESS';
-            const hasEval = !!repository.getEvaluationForInterview(intv.id);
-
+      {/* Schedule Feed */}
+      {filteredInterviews.length === 0 ? (
+        <div className="bg-white rounded-xl border border-zinc-200/80 p-10 text-center shadow-xs text-xs text-zinc-400">
+          No interviews scheduled for this date view.
+        </div>
+      ) : (
+        <div className="space-y-2.5">
+          {filteredInterviews.map((intv) => {
+            const evalObj = repository.getEvaluationForInterview(intv.id);
             return (
               <div
                 key={intv.id}
-                onClick={() => navigate(`/interviewer/workspace/${intv.id}`)}
-                className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                className="bg-white rounded-xl border border-zinc-200/80 p-4 shadow-xs hover:border-zinc-300 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
               >
-                <div className="space-y-2">
+                <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-black text-slate-900">
-                      {new Date(intv.scheduledStart).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} &ndash;{' '}
-                      {new Date(intv.scheduledEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} (IST)
+                    <span className="text-xs font-semibold text-zinc-950 flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-zinc-400" />
+                      {new Date(intv.scheduledStart).toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                      })}{' '}
+                      •{' '}
+                      {new Date(intv.scheduledStart).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      {' – '}
+                      {new Date(intv.scheduledEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
-                    <span className="text-slate-300">&bull;</span>
-                    <span className="text-xs text-slate-500 font-semibold">
-                      {new Date(intv.scheduledStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                    </span>
-                    <span
-                      className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-                        isScheduled
-                          ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                          : isCompleted
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                          : isNoShow
-                          ? 'bg-rose-50 text-rose-700 border border-rose-200'
-                          : 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
+                    <span className="text-[10px] font-medium px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-600 border border-zinc-200/60">
                       {intv.interviewStatus.replace('_', ' ')}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
-                      {intv.studentBadgeJourney.student.user.fullName.slice(0, 2).toUpperCase()}
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-slate-900">
-                        {intv.studentBadgeJourney.student.user.fullName} &bull;{' '}
-                        <span className="text-slate-500 font-normal">{intv.studentBadgeJourney.student.studentCode}</span>
-                      </div>
-                      <div className="text-[11px] text-slate-500">
-                        Track: {intv.studentBadgeJourney.badge.track.name} &bull; Target Badge:{' '}
-                        <strong className="text-slate-700">{intv.studentBadgeJourney.badge.name}</strong>
-                      </div>
-                    </div>
+                  <div className="text-xs font-medium text-zinc-800">
+                    {intv.studentBadgeJourney.student.user.fullName} ({intv.studentBadgeJourney.student.studentCode})
+                  </div>
+                  <div className="text-[11px] text-zinc-500">
+                    {intv.studentBadgeJourney.badge.name} • Attempt #{intv.attemptNumber}
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 shrink-0">
-                  {hasEval ? (
-                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Evaluated
-                    </span>
-                  ) : isCompleted ? (
-                    <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200 animate-pulse">
-                      Evaluation Pending
-                    </span>
-                  ) : null}
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={intv.meetingLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-2.5 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-medium flex items-center gap-1 transition-colors"
+                  >
+                    Meeting <ExternalLink className="w-3 h-3 text-zinc-400" />
+                  </a>
 
-                  <button className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition">
-                    Open Workspace &rarr;
-                  </button>
+                  <Link
+                    to={`/interviewer/workspace/${intv.id}`}
+                    className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium transition-colors shadow-xs"
+                  >
+                    {evalObj ? 'View Evaluation' : 'Evaluate'}
+                  </Link>
                 </div>
               </div>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 };

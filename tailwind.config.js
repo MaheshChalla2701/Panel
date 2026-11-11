@@ -7,34 +7,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        navy: {
-          50: '#F0F4F8',
-          100: '#D9E2EC',
-          200: '#BCCCDC',
-          300: '#9FB3C8',
-          400: '#829AB1',
-          500: '#627D98',
-          600: '#486581',
-          700: '#334E68',
-          800: '#102A43',
-          900: '#0B1D3A',
-          950: '#060F1E',
-        },
+        // Modern minimal zinc-based neutral palette
         grit: {
-          navy: '#0F172A',
-          blue: '#1D4ED8',
-          amber: '#F59E0B',
-          red: '#EF4444',
-          green: '#10B981',
-          bg: '#F8FAFC',
-          card: '#FFFFFF',
-          border: '#E2E8F0',
-          text: '#0F172A',
-          muted: '#64748B',
+          bg: '#FAFAFA',
+          surface: '#FFFFFF',
+          border: '#E4E4E7', // zinc-200
+          borderSubtle: '#F4F4F5', // zinc-100
+          textPrimary: '#09090B', // zinc-950
+          textSecondary: '#71717A', // zinc-500
+          textMuted: '#A1A1AA', // zinc-400
+          primary: '#18181B', // zinc-900
+          primaryHover: '#27272A', // zinc-800
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: [
+          'Inter',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'sans-serif'
+        ],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+      },
+      boxShadow: {
+        'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
+        'card': '0 0 0 1px rgba(24, 24, 27, 0.06), 0 1px 2px -0.5px rgba(24, 24, 27, 0.04)',
+        'elevated': '0 10px 30px -10px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.02)',
       }
     },
   },

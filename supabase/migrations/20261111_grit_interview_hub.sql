@@ -315,3 +315,4 @@ CREATE POLICY admin_full_access_interviews ON interviews FOR ALL TO authenticate
 CREATE POLICY admin_full_access_evaluations ON interview_evaluations FOR ALL TO authenticated USING ((SELECT role FROM users WHERE id = auth.uid()) = 'ADMIN');
 CREATE POLICY admin_full_access_malpractice ON malpractice_cases FOR ALL TO authenticated USING ((SELECT role FROM users WHERE id = auth.uid()) = 'ADMIN');
 CREATE POLICY admin_full_access_audit ON audit_logs FOR SELECT TO authenticated USING ((SELECT role FROM users WHERE id = auth.uid()) = 'ADMIN');
+

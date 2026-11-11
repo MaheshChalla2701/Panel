@@ -3,15 +3,10 @@ import { useAuth } from '../../app/providers/AuthContext';
 import { repository } from '../../services/api/repository';
 import { Link } from 'react-router-dom';
 import {
-  Calendar,
   Clock,
-  UserCheck,
-  FileCheck2,
-  AlertCircle,
   ExternalLink,
-  ArrowRight,
-  TrendingUp,
-  Award,
+  AlertCircle,
+  UserCheck,
 } from 'lucide-react';
 
 export const InterviewerDashboard: React.FC = () => {
@@ -25,7 +20,6 @@ export const InterviewerDashboard: React.FC = () => {
   const interviewer = repository.getInterviewerByUserId(currentUser.id) || repository.getInterviewers()[0];
   const allInterviews = repository.getInterviews().filter((i) => i.interviewerId === interviewer.id);
 
-  // Today is 2026-11-11
   const todayStr = '2026-11-11';
   const todaysInterviews = allInterviews.filter((i) => i.scheduledStart.startsWith(todayStr));
   const upcomingInterviews = allInterviews.filter((i) => {
@@ -45,88 +39,83 @@ export const InterviewerDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-              Part 5.3 — Screen 9 &bull; Interviewer Workspace
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              Welcome, {currentUser.fullName}
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              {currentUser.fullName}
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
-              {interviewer.title} &bull; Specialization: {interviewer.specialization.join(', ')}
+            <p className="text-xs text-zinc-500 mt-0.5">
+              {interviewer.title} • {interviewer.specialization.join(', ')}
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Link
               to="/interviewer/availability"
-              className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow"
+              className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs transition-colors shadow-xs"
             >
-              Configure Working Hours
+              Working Hours
             </Link>
             <Link
               to="/interviewer/schedule"
-              className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition"
+              className="px-3 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-zinc-700 font-medium text-xs transition-colors"
             >
-              Full Calendar
+              Schedule
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Top Level Metric Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <div className="text-xs text-slate-500 font-medium">Today's Interviews</div>
-          <div className="text-2xl font-black text-slate-900">{todaysInterviews.length}</div>
-          <div className="text-[11px] text-blue-600 font-medium">Scheduled for today</div>
+      {/* Metric Strip */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="bg-white p-4 rounded-xl border border-zinc-200/80 shadow-xs space-y-1">
+          <div className="text-[11px] text-zinc-400 font-medium">Today's Sessions</div>
+          <div className="text-xl font-semibold text-zinc-950">{todaysInterviews.length}</div>
+          <div className="text-[10px] text-zinc-500">Scheduled today</div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <div className="text-xs text-slate-500 font-medium">Upcoming Bookings</div>
-          <div className="text-2xl font-black text-blue-600">{upcomingInterviews.length}</div>
-          <div className="text-[11px] text-slate-400">Total future sessions</div>
+        <div className="bg-white p-4 rounded-xl border border-zinc-200/80 shadow-xs space-y-1">
+          <div className="text-[11px] text-zinc-400 font-medium">Upcoming Bookings</div>
+          <div className="text-xl font-semibold text-zinc-950">{upcomingInterviews.length}</div>
+          <div className="text-[10px] text-zinc-500">Future candidates</div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <div className="text-xs text-slate-500 font-medium">Pending Evaluations</div>
-          <div className={`text-2xl font-black ${pendingEvaluations.length > 0 ? 'text-amber-600' : 'text-slate-900'}`}>
-            {pendingEvaluations.length}
-          </div>
-          <div className="text-[11px] text-amber-600 font-medium">Requires outcome recording</div>
+        <div className="bg-white p-4 rounded-xl border border-zinc-200/80 shadow-xs space-y-1">
+          <div className="text-[11px] text-zinc-400 font-medium">Pending Evaluations</div>
+          <div className="text-xl font-semibold text-zinc-950">{pendingEvaluations.length}</div>
+          <div className="text-[10px] text-zinc-500">Awaiting rubric submission</div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-1">
-          <div className="text-xs text-slate-500 font-medium">Completed Evaluations</div>
-          <div className="text-2xl font-black text-emerald-600">{completedInterviews.length}</div>
-          <div className="text-[11px] text-slate-400">Lifetime assessed</div>
+        <div className="bg-white p-4 rounded-xl border border-zinc-200/80 shadow-xs space-y-1">
+          <div className="text-[11px] text-zinc-400 font-medium">Completed Evaluations</div>
+          <div className="text-xl font-semibold text-zinc-950">{completedInterviews.length}</div>
+          <div className="text-[10px] text-zinc-500">Total verified</div>
         </div>
       </div>
 
-      {/* Pending Evaluations Alert (Action Needed) */}
+      {/* Pending Evaluations Alert */}
       {pendingEvaluations.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-sm space-y-3">
-          <div className="flex items-center gap-2 text-xs font-bold text-amber-900 uppercase tracking-wider">
-            <AlertCircle className="w-4 h-4 text-amber-700" />
-            Action Required: Pending Candidate Evaluations
+        <div className="bg-white border border-zinc-200/80 rounded-xl p-4 shadow-xs space-y-3">
+          <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-900">
+            <AlertCircle className="w-4 h-4 text-zinc-500" />
+            <span>Pending Candidate Evaluations ({pendingEvaluations.length})</span>
           </div>
-          <p className="text-xs text-amber-950">
-            You have completed interview sessions awaiting official evaluation submission. Please fill the rubric scores to release student results.
+          <p className="text-xs text-zinc-500">
+            The following completed sessions require official rubric evaluation scores.
           </p>
 
-          <div className="divide-y divide-amber-200/60 border border-amber-200 rounded-xl bg-white/80 overflow-hidden">
+          <div className="divide-y divide-zinc-100 border border-zinc-200/80 rounded-lg overflow-hidden">
             {pendingEvaluations.map((p) => (
-              <div key={p.id} className="p-3.5 flex items-center justify-between text-xs">
+              <div key={p.id} className="p-3 bg-white flex items-center justify-between text-xs">
                 <div>
-                  <span className="font-bold text-slate-900">{p.studentBadgeJourney.student.user.fullName}</span>
-                  <span className="text-slate-500 mx-2">&bull;</span>
-                  <span className="text-slate-600">{p.studentBadgeJourney.badge.name}</span>
+                  <span className="font-medium text-zinc-950">{p.studentBadgeJourney.student.user.fullName}</span>
+                  <span className="text-zinc-300 mx-2">•</span>
+                  <span className="text-zinc-500">{p.studentBadgeJourney.badge.name}</span>
                 </div>
                 <Link
                   to={`/interviewer/workspace/${p.id}`}
-                  className="px-3.5 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition"
+                  className="px-3 py-1 rounded-md bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs transition-colors shadow-xs"
                 >
                   Submit Evaluation &rarr;
                 </Link>
@@ -136,44 +125,49 @@ export const InterviewerDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Grid: Today's Schedule & Quick Actions */}
+      {/* Grid: Today's Schedule & Quick Workload */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Today's Agenda (2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs space-y-3.5">
           <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-slate-900">Today's Interview Schedule</h3>
-            <span className="text-xs text-slate-500">{new Date(todayStr).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</span>
+            <h3 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider">
+              Today's Schedule
+            </h3>
+            <span className="text-xs text-zinc-400">
+              {new Date(todayStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+            </span>
           </div>
 
           {todaysInterviews.length === 0 ? (
-            <div className="p-8 text-center text-xs text-slate-400 bg-slate-50 rounded-xl">
+            <div className="p-8 text-center text-xs text-zinc-400 bg-zinc-50 rounded-lg border border-zinc-200/60">
               No interview sessions booked for today.
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {todaysInterviews.map((intv) => {
                 const evalObj = repository.getEvaluationForInterview(intv.id);
                 return (
                   <div
                     key={intv.id}
-                    className="p-4 rounded-xl border border-slate-100 hover:border-slate-200 bg-slate-50/50 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                    className="p-3.5 rounded-lg border border-zinc-200/80 bg-white hover:border-zinc-300 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-black text-slate-900">
+                        <span className="text-xs font-semibold text-zinc-950 flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-zinc-400" />
                           {new Date(intv.scheduledStart).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           {' – '}
                           {new Date(intv.scheduledEnd).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         </span>
-                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                        <span className="text-[10px] font-medium px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-600 border border-zinc-200/60">
                           {intv.interviewStatus.replace('_', ' ')}
                         </span>
                       </div>
 
-                      <div className="text-xs font-semibold text-slate-800">
-                        {intv.studentBadgeJourney.student.user.fullName} &bull; {intv.studentBadgeJourney.student.studentCode}
+                      <div className="text-xs font-medium text-zinc-800">
+                        {intv.studentBadgeJourney.student.user.fullName} • {intv.studentBadgeJourney.student.studentCode}
                       </div>
-                      <div className="text-[11px] text-slate-500">
+                      <div className="text-[11px] text-zinc-500">
                         {intv.studentBadgeJourney.badge.name} (Attempt #{intv.attemptNumber})
                       </div>
                     </div>
@@ -183,14 +177,14 @@ export const InterviewerDashboard: React.FC = () => {
                         href={intv.meetingLink}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold flex items-center gap-1 transition"
+                        className="px-2.5 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-xs font-medium flex items-center gap-1 transition-colors"
                       >
-                        Join Room <ExternalLink className="w-3 h-3" />
+                        Room <ExternalLink className="w-3 h-3 text-zinc-400" />
                       </a>
 
                       <Link
                         to={`/interviewer/workspace/${intv.id}`}
-                        className="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition"
+                        className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium transition-colors shadow-xs"
                       >
                         {evalObj ? 'View Evaluation' : 'Open Workspace'}
                       </Link>
@@ -203,39 +197,43 @@ export const InterviewerDashboard: React.FC = () => {
         </div>
 
         {/* Right: Workload & Availability Preview */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-            <h4 className="text-sm font-bold text-slate-900">Weekly Workload Distribution</h4>
-            <div className="space-y-2 text-xs">
-              <div className="flex justify-between text-slate-600">
-                <span>Configured Weekly Days</span>
-                <span className="font-bold text-slate-900">{availability.length} Days</span>
+        <div className="space-y-4">
+          <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs space-y-3">
+            <h4 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider">
+              Workload & Capacity
+            </h4>
+            <div className="space-y-2 text-xs divide-y divide-zinc-100">
+              <div className="flex justify-between pt-1 text-zinc-600">
+                <span>Working Days</span>
+                <span className="font-medium text-zinc-900">{availability.length} Days</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between pt-2 text-zinc-600">
                 <span>Daily Max Capacity</span>
-                <span className="font-bold text-slate-900">{interviewer.maxInterviewsPerDay} Interviews</span>
+                <span className="font-medium text-zinc-900">{interviewer.maxInterviewsPerDay} Interviews</span>
               </div>
-              <div className="flex justify-between text-slate-600">
+              <div className="flex justify-between pt-2 text-zinc-600">
                 <span>Open Bookable Slots</span>
-                <span className="font-bold text-emerald-600">{slots.filter((s) => s.status === 'AVAILABLE').length} Slots</span>
+                <span className="font-medium text-zinc-900">{slots.filter((s) => s.status === 'AVAILABLE').length} Slots</span>
               </div>
             </div>
 
-            <Link
-              to="/interviewer/availability"
-              className="w-full inline-flex items-center justify-center text-xs font-bold text-blue-600 hover:text-blue-800 py-1 transition"
-            >
-              Modify Working Hours & Exceptions &rarr;
-            </Link>
+            <div className="pt-2">
+              <Link
+                to="/interviewer/availability"
+                className="text-xs text-zinc-600 hover:text-zinc-950 font-medium inline-flex items-center gap-1"
+              >
+                Modify Hours & Overrides &rarr;
+              </Link>
+            </div>
           </div>
 
-          <div className="bg-slate-50 rounded-2xl border border-slate-200/80 p-5 text-xs text-slate-600 space-y-2">
-            <div className="font-bold text-slate-900 flex items-center gap-1.5">
-              <UserCheck className="w-4 h-4 text-blue-600" />
-              Role Permission Guard
+          <div className="bg-white rounded-xl border border-zinc-200/80 p-4 text-xs text-zinc-500 space-y-1 shadow-xs">
+            <div className="font-medium text-zinc-900 flex items-center gap-1.5">
+              <UserCheck className="w-3.5 h-3.5 text-zinc-400" />
+              Evaluator Isolation
             </div>
-            <p className="text-[11px] leading-relaxed text-slate-500">
-              Evaluator permissions are strictly isolated. You can only view and evaluate students assigned to your calendar. Submitted evaluations are cryptographically logged and immutable.
+            <p className="text-[11px] leading-relaxed text-zinc-500">
+              You can only view and evaluate candidates assigned to your calendar. Submitted evaluations are cryptographically logged and immutable.
             </p>
           </div>
         </div>

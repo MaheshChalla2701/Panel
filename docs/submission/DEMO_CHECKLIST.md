@@ -141,3 +141,4 @@ Use the **"Before/After Scenarios"** bar at the very top of the screen to quickl
 - [ ] Responsive navigation works across desktop and mobile screen sizes.
 - [ ] In-app notification centre reflects state updates with read/unread flags.
 - [ ] Zero dead buttons, placeholder strings, or broken links across the entire app.
+

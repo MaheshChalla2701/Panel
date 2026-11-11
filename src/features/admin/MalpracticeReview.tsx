@@ -5,16 +5,9 @@ import { useToast } from '../../app/providers/ToastContext';
 import {
   ShieldAlert,
   ShieldCheck,
-  AlertTriangle,
-  FileText,
-  User,
   Plus,
-  CheckCircle2,
-  XCircle,
   Clock,
-  History,
 } from 'lucide-react';
-import { MalpracticeCase } from '../../types';
 
 export const MalpracticeReview: React.FC = () => {
   const { currentUser } = useAuth();
@@ -28,13 +21,11 @@ export const MalpracticeReview: React.FC = () => {
   const cases = repository.getMalpracticeCases();
   const journeys = repository.getJourneys();
 
-  // Selected case for review
   const [selectedCase, setSelectedCase] = useState<ReturnType<typeof repository.getMalpracticeCases>[number] | null>(null);
   const [decision, setDecision] = useState<'CONFIRMED' | 'REJECTED'>('CONFIRMED');
   const [justification, setJustification] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // New Case Dialog
   const [showNewCaseModal, setShowNewCaseModal] = useState(false);
   const [targetJourneyId, setTargetJourneyId] = useState<string>('');
   const [newReason, setNewReason] = useState<string>('');
@@ -45,7 +36,7 @@ export const MalpracticeReview: React.FC = () => {
       toast({
         type: 'error',
         title: 'Justification Required',
-        message: 'You must provide a documented rationale for the disciplinary decision.',
+        message: 'Please provide documented rationale for this decision.',
       });
       return;
     }
@@ -67,8 +58,8 @@ export const MalpracticeReview: React.FC = () => {
         title: `Case Marked ${decision}`,
         message:
           decision === 'CONFIRMED'
-            ? 'Badge has been nullified and the candidate notified.'
-            : 'Inquiry dismissed and badge credential reinstated.',
+            ? 'Badge nullified and candidate notified.'
+            : 'Inquiry dismissed and credential reinstated.',
       });
       setSelectedCase(null);
       setJustification('');
@@ -86,7 +77,7 @@ export const MalpracticeReview: React.FC = () => {
       toast({
         type: 'error',
         title: 'Fields Incomplete',
-        message: 'Please select candidate journey, specify reason, and link audit evidence.',
+        message: 'Please select candidate, specify reason, and link audit evidence.',
       });
       return;
     }
@@ -120,89 +111,74 @@ export const MalpracticeReview: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold text-rose-600 uppercase tracking-wider mb-1">
-              Part 5.4 — Screen 18 &bull; Integrity Oversight
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Academic Integrity & Malpractice Board</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Review contest anomalies, adjudicate reported malpractice cases, and authorize badge nullification or reinstatement.
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              Academic Integrity & Malpractice Board
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Review contest anomalies, adjudicate reported malpractice, and authorize nullification or reinstatement.
             </p>
           </div>
 
           <button
             onClick={() => setShowNewCaseModal(true)}
-            className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow"
+            className="inline-flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs px-3.5 py-2 rounded-lg transition-colors shadow-xs"
           >
-            <Plus className="w-4 h-4" /> Open New Inquiry
+            <Plus className="w-3.5 h-3.5" /> Open Inquiry
           </button>
         </div>
       </div>
 
       {/* Cases List */}
-      <div className="space-y-4">
+      <div className="space-y-3">
         {cases.map((c) => {
           const isPending = c.status === 'UNDER_INVESTIGATION' || c.status === 'REPORTED';
           const isConfirmed = c.status === 'CONFIRMED';
-          const isRejected = c.status === 'REJECTED';
 
           return (
             <div
               key={c.id}
-              className={`bg-white rounded-2xl border p-6 shadow-sm transition space-y-4 ${
-                isPending
-                  ? 'border-amber-300 ring-1 ring-amber-300'
-                  : isConfirmed
-                  ? 'border-rose-200'
-                  : 'border-slate-200'
-              }`}
+              className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs transition-colors space-y-3"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-100">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${
-                    isPending
-                      ? 'bg-amber-100 text-amber-800'
-                      : isConfirmed
-                      ? 'bg-rose-100 text-rose-800'
-                      : 'bg-emerald-100 text-emerald-800'
-                  }`}>
+                  <div className="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-800 flex items-center justify-center font-medium">
                     {isPending ? (
-                      <Clock className="w-5 h-5" />
+                      <Clock className="w-4 h-4 text-zinc-500" />
                     ) : isConfirmed ? (
-                      <ShieldAlert className="w-5 h-5" />
+                      <ShieldAlert className="w-4 h-4 text-rose-600" />
                     ) : (
-                      <ShieldCheck className="w-5 h-5" />
+                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
                     )}
                   </div>
 
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-slate-900 text-xs">{c.id.toUpperCase()}</span>
-                      <span className="text-slate-400">&bull;</span>
-                      <span className="text-xs font-bold text-slate-900">
+                      <span className="font-mono text-xs font-medium text-zinc-950">{c.id.toUpperCase()}</span>
+                      <span className="text-zinc-300">•</span>
+                      <span className="text-xs font-medium text-zinc-950">
                         {c.studentBadgeJourney.student.user.fullName} ({c.studentBadgeJourney.student.studentCode})
                       </span>
                     </div>
-                    <div className="text-[11px] text-slate-500">
-                      Target Badge: <strong>{c.studentBadgeJourney.badge.name}</strong> &bull; Reported by:{' '}
-                      {c.reportedByName || 'Automated Monitor'}
+                    <div className="text-[11px] text-zinc-500">
+                      Target: <span className="font-medium text-zinc-700">{c.studentBadgeJourney.badge.name}</span> • Reported by: {c.reportedByName || 'Automated Monitor'}
                     </div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <span
-                    className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full border ${
+                    className={`text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                       isPending
-                        ? 'bg-amber-50 text-amber-900 border-amber-300'
+                        ? 'bg-amber-50 text-amber-700 border-amber-200/60'
                         : isConfirmed
-                        ? 'bg-rose-50 text-rose-800 border-rose-300'
-                        : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                        ? 'bg-rose-50 text-rose-700 border-rose-200/60'
+                        : 'bg-emerald-50 text-emerald-700 border-emerald-200/60'
                     }`}
                   >
-                    Status: {c.status.replace('_', ' ')}
+                    {c.status.replace('_', ' ')}
                   </span>
 
                   {isPending && (
@@ -211,7 +187,7 @@ export const MalpracticeReview: React.FC = () => {
                         setSelectedCase(c);
                         setDecision('CONFIRMED');
                       }}
-                      className="px-4 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition shadow"
+                      className="px-3 py-1 rounded-md bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs transition-colors shadow-xs"
                     >
                       Adjudicate Case &rarr;
                     </button>
@@ -219,45 +195,22 @@ export const MalpracticeReview: React.FC = () => {
                 </div>
               </div>
 
-              {/* Allegation & Evidence */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
-                  <div className="font-bold text-slate-700 uppercase tracking-wider text-[10px]">
-                    Allegation Reason
-                  </div>
-                  <p className="text-slate-800 leading-relaxed">{c.reason}</p>
+              {/* Description & Evidence */}
+              <div className="text-xs space-y-1.5 text-zinc-600">
+                <div>
+                  <span className="text-zinc-400 font-medium">Allegation:</span> {c.reason}
                 </div>
-
-                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 space-y-1">
-                  <div className="font-bold text-slate-700 uppercase tracking-wider text-[10px]">
-                    Evidence & System Logs
+                {c.evidenceReference && (
+                  <div>
+                    <span className="text-zinc-400 font-medium">Evidence Audit:</span> {c.evidenceReference}
                   </div>
-                  <p className="font-mono text-[11px] text-slate-700 leading-relaxed">
-                    {c.evidenceReference}
-                  </p>
-                </div>
+                )}
+                {c.decisionJustification && (
+                  <div className="text-[11px] text-zinc-500 pt-1 border-t border-zinc-100">
+                    <span className="font-medium text-zinc-700">Decision Justification:</span> {c.decisionJustification}
+                  </div>
+                )}
               </div>
-
-              {/* Resolution Decision if already resolved */}
-              {c.decision && (
-                <div
-                  className={`p-4 rounded-xl border text-xs space-y-1.5 ${
-                    c.decision === 'CONFIRMED'
-                      ? 'bg-rose-50 border-rose-200 text-rose-950'
-                      : 'bg-emerald-50 border-emerald-200 text-emerald-950'
-                  }`}
-                >
-                  <div className="flex items-center justify-between font-bold">
-                    <span>
-                      Formal Adjudication Decision: {c.decision} ({c.decision === 'CONFIRMED' ? 'Badge Nullified' : 'Badge Reinstated'})
-                    </span>
-                    <span className="text-[10px] opacity-75">
-                      Reviewed by {c.reviewerName} on {new Date(c.reviewedAt!).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <p className="leading-relaxed opacity-90">{c.decisionJustification}</p>
-                </div>
-              )}
             </div>
           );
         })}
@@ -265,75 +218,67 @@ export const MalpracticeReview: React.FC = () => {
 
       {/* Adjudication Modal */}
       {selectedCase && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-5 animate-in zoom-in-95">
-            <h3 className="text-base font-bold text-slate-900">
-              Adjudicate Malpractice Inquiry ({selectedCase.id.toUpperCase()})
-            </h3>
-            <p className="text-xs text-slate-500">
-              Candidate: <strong>{selectedCase.studentBadgeJourney.student.user.fullName}</strong> &bull; Target Badge:{' '}
-              <strong>{selectedCase.studentBadgeJourney.badge.name}</strong>
+        <div className="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-sm w-full p-5 shadow-elevated border border-zinc-200 space-y-3.5 animate-in zoom-in-95">
+            <h3 className="text-sm font-semibold text-zinc-950">Adjudicate Malpractice Inquiry</h3>
+            <p className="text-xs text-zinc-500">
+              Reviewing case {selectedCase.id.toUpperCase()} for candidate {selectedCase.studentBadgeJourney.student.user.fullName}.
             </p>
 
-            <div className="space-y-4 text-xs">
+            <div className="space-y-2.5 text-xs">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">Official Adjudication Finding *</label>
-                <div className="grid grid-cols-2 gap-3">
+                <label className="block text-zinc-600 font-medium mb-1">Decision</label>
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setDecision('CONFIRMED')}
-                    className={`p-3 rounded-xl border text-left transition ${
+                    className={`p-2 rounded-lg border text-center font-medium transition-colors ${
                       decision === 'CONFIRMED'
-                        ? 'border-rose-600 bg-rose-50 ring-2 ring-rose-500 text-rose-950 font-bold'
-                        : 'border-slate-200 bg-slate-50 text-slate-700'
+                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                        : 'border-zinc-200 bg-white text-zinc-700'
                     }`}
                   >
-                    <div className="font-extrabold">Confirm Malpractice</div>
-                    <div className="text-[10px] opacity-80 mt-0.5">Nullify badge & log disciplinary action.</div>
+                    Confirm Malpractice
                   </button>
-
                   <button
                     type="button"
                     onClick={() => setDecision('REJECTED')}
-                    className={`p-3 rounded-xl border text-left transition ${
+                    className={`p-2 rounded-lg border text-center font-medium transition-colors ${
                       decision === 'REJECTED'
-                        ? 'border-emerald-600 bg-emerald-50 ring-2 ring-emerald-500 text-emerald-950 font-bold'
-                        : 'border-slate-200 bg-slate-50 text-slate-700'
+                        ? 'border-zinc-900 bg-zinc-900 text-white shadow-xs'
+                        : 'border-zinc-200 bg-white text-zinc-700'
                     }`}
                   >
-                    <div className="font-extrabold">Dismiss (Unsubstantiated)</div>
-                    <div className="text-[10px] opacity-80 mt-0.5">Reinstate badge & exonerate candidate.</div>
+                    Dismiss & Reinstate
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  Decision Justification & Evidence Summary *
-                </label>
+                <label className="block text-zinc-600 font-medium mb-1">Administrative Justification *</label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   value={justification}
                   onChange={(e) => setJustification(e.target.value)}
-                  placeholder="Detail the technical reasoning, forensic findings, and committee vote..."
-                  className="w-full border border-slate-300 rounded-xl p-3 text-xs bg-slate-50 focus:bg-white"
+                  placeholder="Document formal justification..."
+                  className="w-full border border-zinc-200 rounded-lg p-2 text-xs bg-white"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-zinc-100">
               <button
                 onClick={() => setSelectedCase(null)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                className="px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-100"
               >
                 Cancel
               </button>
               <button
                 onClick={handleResolveCase}
                 disabled={isSubmitting || !justification}
-                className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs disabled:opacity-50"
+                className="px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs disabled:opacity-50 shadow-xs"
               >
-                {isSubmitting ? 'Recording Decision...' : 'Commit Disciplinary Decision'}
+                {isSubmitting ? 'Recording...' : 'Commit Decision'}
               </button>
             </div>
           </div>
@@ -342,65 +287,62 @@ export const MalpracticeReview: React.FC = () => {
 
       {/* New Inquiry Modal */}
       {showNewCaseModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 animate-in zoom-in-95">
-            <h3 className="text-base font-bold text-slate-900">Initiate Academic Integrity Inquiry</h3>
-            <p className="text-xs text-slate-500">
-              Opening an inquiry places the badge status under review while forensic investigation proceeds.
-            </p>
+        <div className="fixed inset-0 bg-zinc-950/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-sm w-full p-5 shadow-elevated border border-zinc-200 space-y-3.5 animate-in zoom-in-95">
+            <h3 className="text-sm font-semibold text-zinc-950">Open Malpractice Inquiry</h3>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-2.5 text-xs">
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Select Candidate Badge Journey</label>
+                <label className="block text-zinc-600 font-medium mb-1">Candidate Journey</label>
                 <select
                   value={targetJourneyId}
                   onChange={(e) => setTargetJourneyId(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 bg-slate-50 text-slate-800"
+                  className="w-full border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-xs"
                 >
-                  <option value="">Select student & badge...</option>
+                  <option value="">Select candidate journey...</option>
                   {journeys.map((j) => (
                     <option key={j.id} value={j.id}>
-                      {j.student.user.fullName} ({j.student.studentCode}) &bull; {j.badge.name}
+                      {j.student.user.fullName} • {j.badge.name} ({j.badgeStatus})
                     </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Allegation Summary</label>
+                <label className="block text-zinc-600 font-medium mb-1">Allegation / Anomaly</label>
                 <input
                   type="text"
                   value={newReason}
                   onChange={(e) => setNewReason(e.target.value)}
-                  placeholder="e.g. Code plagiarism, proxy browser extension..."
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 bg-slate-50"
+                  placeholder="e.g. Code similarity score 94%..."
+                  className="w-full border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-xs"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-semibold mb-1">Evidence & Log Reference</label>
+                <label className="block text-zinc-600 font-medium mb-1">Audit Evidence</label>
                 <textarea
                   rows={2}
                   value={newEvidence}
                   onChange={(e) => setNewEvidence(e.target.value)}
-                  placeholder="Commit hashes, IP anomalies, proctoring screenshots..."
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 bg-slate-50"
+                  placeholder="Repository diff, submission hashes..."
+                  className="w-full border border-zinc-200 rounded-lg p-2 text-xs bg-white"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-zinc-100">
               <button
                 onClick={() => setShowNewCaseModal(false)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100"
+                className="px-3 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:bg-zinc-100"
               >
                 Cancel
               </button>
               <button
                 onClick={handleCreateCase}
-                className="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs"
+                className="px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs shadow-xs"
               >
-                Submit Inquiry
+                File Inquiry
               </button>
             </div>
           </div>

@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { repository } from '../../services/api/repository';
-import {
-  UserCheck,
-  Calendar,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  Briefcase,
-  ShieldCheck,
-} from 'lucide-react';
 
 export const InterviewerManagement: React.FC = () => {
   const [, setTick] = useState(0);
@@ -48,80 +39,77 @@ export const InterviewerManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-        <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-          Part 5.4 — Screen 17
-        </div>
-        <h1 className="text-2xl font-black text-slate-900 tracking-tight">Interviewer Capacity & Workload Oversight</h1>
-        <p className="text-sm text-slate-500 mt-1">
-          Monitor evaluator utilization, active working schedules, assigned candidate loads, and historical throughput.
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
+        <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+          Interviewer Roster & Capacity Oversight
+        </h1>
+        <p className="text-xs text-zinc-500 mt-0.5">
+          Monitor evaluator workload, weekly schedules, active sessions, and throughput.
         </p>
       </div>
 
       {/* Evaluator Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {interviewerStats.map((item) => {
           const i = item.interviewer;
           return (
             <div
               key={i.id}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5 flex flex-col justify-between"
+              className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs space-y-4 flex flex-col justify-between"
             >
-              <div className="space-y-4">
-                <div className="flex items-start gap-3.5">
-                  <div className="w-12 h-12 rounded-full bg-slate-900 text-white font-bold text-sm flex items-center justify-center shrink-0">
+              <div className="space-y-3.5">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-zinc-900 text-white font-medium text-xs flex items-center justify-center shrink-0">
                     {i.user.fullName.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <h3 className="font-extrabold text-slate-900 text-base">{i.user.fullName}</h3>
-                    <p className="text-xs text-slate-500 font-medium">{i.title}</p>
-                    <div className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full inline-block mt-1">
-                      Active Evaluator
+                    <h3 className="font-semibold text-zinc-950 text-sm">{i.user.fullName}</h3>
+                    <p className="text-xs text-zinc-500">{i.title}</p>
+                    <div className="text-[10px] text-zinc-600 bg-zinc-100 border border-zinc-200/60 px-1.5 py-0.2 rounded font-medium inline-block mt-1">
+                      Active
                     </div>
                   </div>
                 </div>
 
-                <div className="divide-y divide-slate-100 text-xs text-slate-600">
-                  <div className="py-2 flex justify-between">
-                    <span>Working Days / Week</span>
-                    <span className="font-bold text-slate-900">{item.activeDaysCount} Days</span>
+                <div className="divide-y divide-zinc-100 text-xs text-zinc-600">
+                  <div className="py-1.5 flex justify-between">
+                    <span className="text-zinc-400">Working Days</span>
+                    <span className="font-medium text-zinc-950">{item.activeDaysCount} Days/wk</span>
                   </div>
-                  <div className="py-2 flex justify-between">
-                    <span>Daily Max Capacity</span>
-                    <span className="font-bold text-slate-900">{i.maxInterviewsPerDay} Candidates</span>
+                  <div className="py-1.5 flex justify-between">
+                    <span className="text-zinc-400">Daily Max</span>
+                    <span className="font-medium text-zinc-950">{i.maxInterviewsPerDay} Slots</span>
                   </div>
-                  <div className="py-2 flex justify-between">
-                    <span>Assigned Upcoming</span>
-                    <span className="font-bold text-blue-600">{item.upcomingCount} Sessions</span>
+                  <div className="py-1.5 flex justify-between">
+                    <span className="text-zinc-400">Assigned Upcoming</span>
+                    <span className="font-medium text-zinc-950">{item.upcomingCount} Sessions</span>
                   </div>
-                  <div className="py-2 flex justify-between">
-                    <span>Completed Lifetime</span>
-                    <span className="font-bold text-emerald-600">{item.completedCount} Evaluations</span>
+                  <div className="py-1.5 flex justify-between">
+                    <span className="text-zinc-400">Completed Total</span>
+                    <span className="font-medium text-zinc-950">{item.completedCount} Evaluations</span>
                   </div>
                 </div>
 
                 {/* Utilization Gauge */}
-                <div className="space-y-1.5 pt-1">
+                <div className="space-y-1 pt-1">
                   <div className="flex justify-between text-xs">
-                    <span className="text-slate-500 font-medium">Workload Utilization</span>
-                    <span className="font-bold text-slate-900">{item.workloadPct}%</span>
+                    <span className="text-zinc-400 text-[11px]">Utilization</span>
+                    <span className="font-mono text-zinc-900">{item.workloadPct}%</span>
                   </div>
-                  <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-zinc-100 h-1.5 rounded-full overflow-hidden">
                     <div
-                      className={`h-full ${
-                        item.workloadPct > 80 ? 'bg-amber-500' : 'bg-blue-600'
-                      }`}
+                      className="h-full bg-zinc-900 rounded-full"
                       style={{ width: `${item.workloadPct}%` }}
                     />
                   </div>
                 </div>
 
                 {/* Specialization tags */}
-                <div className="pt-2">
-                  <div className="text-[10px] uppercase font-bold text-slate-400 mb-1.5">Specializations</div>
-                  <div className="flex flex-wrap gap-1.5">
+                <div className="pt-1">
+                  <div className="text-[10px] uppercase font-medium text-zinc-400 mb-1">Domains</div>
+                  <div className="flex flex-wrap gap-1">
                     {i.specialization.map((spec) => (
-                      <span key={spec} className="text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md font-medium">
+                      <span key={spec} className="text-[10px] bg-zinc-50 text-zinc-600 border border-zinc-200/60 px-1.5 py-0.2 rounded font-medium">
                         {spec}
                       </span>
                     ))}
@@ -129,8 +117,8 @@ export const InterviewerManagement: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 text-[11px] text-slate-400">
-                Timezone: {i.timezone} &bull; Email: {i.user.email}
+              <div className="pt-3 border-t border-zinc-100 text-[10px] text-zinc-400">
+                {i.timezone} • {i.user.email}
               </div>
             </div>
           );

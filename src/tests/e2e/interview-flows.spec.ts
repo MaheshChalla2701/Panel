@@ -13,10 +13,10 @@ test.describe('GRIT Interview Hub — End-to-End User Journey Scenarios', () => 
   test('Scenario 1: Student views eligibility, selects slot, books, and sees confirmation', async ({ page }) => {
     // 1. Visit Student Home
     await expect(page.locator('h1')).toContainText('Aarav Sharma');
-    await expect(page.getByText("You're eligible for your interview!")).toBeVisible();
+    await expect(page.getByText("You're eligible for your interview!").first()).toBeVisible();
 
     // 2. Navigate to booking
-    await page.getByRole('link', { name: 'Book Interview' }).first().click();
+    await page.getByRole('link', { name: /Book Interview/i }).first().click();
     await expect(page).toHaveURL(/.*book-interview/);
 
     // 3. Select a bookable slot
@@ -56,10 +56,12 @@ test.describe('GRIT Interview Hub — End-to-End User Journey Scenarios', () => 
 
     // 5. Modal confirmation
     await page.getByRole('button', { name: /Confirm Official Submission/i }).click();
-    await expect(page.getByText('Evaluation Immutable & Saved')).toBeVisible();
+    await expect(page.getByText(/Evaluation Immutable & Saved/i)).toBeVisible();
 
-    // 6. Verify student sees Passed outcome and awarded badge
-    await page.getByRole('button', { name: /Student/i }).first().click();
+    // 6. Verify candidate sees Passed outcome and awarded badge
+    await page.evaluate(() => {
+      localStorage.setItem('grit_current_user_id', 'user-stu-4');
+    });
     await page.goto('/badge-status');
     await expect(page.getByText(/Cleared your interview!|Official Track Badge Awarded/i)).toBeVisible();
   });
@@ -100,7 +102,7 @@ test.describe('GRIT Interview Hub — End-to-End User Journey Scenarios', () => 
       // 3. Choose Confirm Malpractice & fill justification
       await page.getByRole('button', { name: /Confirm Malpractice/i }).click();
       await page.locator('textarea').last().fill('Plagiarism confirmed by academic committee review.');
-      await page.getByRole('button', { name: /Commit Disciplinary Decision/i }).click();
+      await page.getByRole('button', { name: /Commit Decision/i }).click();
 
       await expect(page.getByText(/Case Marked CONFIRMED/i)).toBeVisible();
     }

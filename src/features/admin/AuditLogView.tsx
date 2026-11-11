@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { repository } from '../../services/api/repository';
-import { History, Search, Filter, ShieldCheck, Clock, User } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export const AuditLogView: React.FC = () => {
   const [, setTick] = useState(0);
@@ -32,43 +32,41 @@ export const AuditLogView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-              Part 5.4 — Screen 19 &bull; Compliance & Transparency
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">System Audit Log (Append-Only)</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Immutable ledger of all administrative overrides, booking creations, score submissions, and badge state transitions.
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              System Audit Log
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Append-only immutable record of all state transitions, reviews, overrides, and scores.
             </p>
           </div>
 
-          <div className="text-xs font-mono font-bold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-            Total Logged Events: {logs.length}
+          <div className="text-xs font-mono text-zinc-500 bg-zinc-50 px-2.5 py-1 rounded-md border border-zinc-200/80">
+            {logs.length} logged events
           </div>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-3.5 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="relative w-full sm:w-72">
+          <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-2.5" />
           <input
             type="text"
-            placeholder="Search action, actor, or reason..."
+            placeholder="Search action, actor, reason..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full text-xs pl-9 pr-4 py-2 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full text-xs pl-8 pr-3 py-1.5 border border-zinc-200 rounded-lg bg-white focus:outline-none focus:ring-1 focus:ring-zinc-900"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-slate-500">Filter Entity:</label>
           <select
             value={entityFilter}
             onChange={(e) => setEntityFilter(e.target.value)}
-            className="text-xs font-semibold border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700"
+            className="text-xs font-medium border border-zinc-200 rounded-md px-2.5 py-1 bg-white text-zinc-700"
           >
             <option value="ALL">All Entity Types</option>
             <option value="INTERVIEW">Interview Bookings</option>
@@ -81,52 +79,52 @@ export const AuditLogView: React.FC = () => {
       </div>
 
       {/* Log Feed Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-[10px] tracking-wider">
+            <thead className="bg-zinc-50/70 border-b border-zinc-200/80 text-zinc-500 font-medium uppercase text-[10px] tracking-wider">
               <tr>
                 <th className="py-3 px-4">Timestamp (UTC)</th>
-                <th className="py-3 px-4">Actor & Role</th>
+                <th className="py-3 px-4">Actor</th>
                 <th className="py-3 px-4">Action</th>
-                <th className="py-3 px-4">Entity Reference</th>
-                <th className="py-3 px-4">State Transition</th>
-                <th className="py-3 px-4">Reason / Notes</th>
+                <th className="py-3 px-4">Entity</th>
+                <th className="py-3 px-4">Transition</th>
+                <th className="py-3 px-4">Reason</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+            <tbody className="divide-y divide-zinc-100 font-medium text-zinc-700">
               {filteredLogs.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="text-center py-12 text-slate-400">
+                  <td colSpan={6} className="text-center py-10 text-zinc-400">
                     No audit records match the selected filter.
                   </td>
                 </tr>
               ) : (
                 filteredLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-slate-50/80 transition">
+                  <tr key={log.id} className="hover:bg-zinc-50/50 transition-colors">
                     {/* Timestamp */}
-                    <td className="py-3 px-4 font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                    <td className="py-3 px-4 font-mono text-[11px] text-zinc-400 whitespace-nowrap">
                       {new Date(log.createdAt).toISOString().replace('T', ' ').slice(0, 19)}
                     </td>
 
                     {/* Actor */}
                     <td className="py-3 px-4">
-                      <div className="font-bold text-slate-900">{log.actorName}</div>
-                      <div className="text-[10px] uppercase font-bold text-slate-400">{log.actorRole}</div>
+                      <div className="font-medium text-zinc-950">{log.actorName}</div>
+                      <div className="text-[10px] uppercase font-medium text-zinc-400">{log.actorRole}</div>
                     </td>
 
                     {/* Action */}
                     <td className="py-3 px-4">
-                      <span className="font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded text-[10px]">
+                      <span className="font-mono text-[10px] bg-zinc-100 text-zinc-800 border border-zinc-200/60 px-1.5 py-0.2 rounded font-medium">
                         {log.action}
                       </span>
                     </td>
 
                     {/* Entity */}
                     <td className="py-3 px-4">
-                      <div className="font-semibold text-slate-800 text-[11px]">{log.entityType}</div>
-                      <div className="font-mono text-[10px] text-slate-400">{log.entityId}</div>
+                      <div className="text-[11px] text-zinc-700">{log.entityType}</div>
+                      <div className="font-mono text-[10px] text-zinc-400">{log.entityId}</div>
                     </td>
 
                     {/* State Transition */}
@@ -134,19 +132,19 @@ export const AuditLogView: React.FC = () => {
                       {log.previousValue || log.newValue ? (
                         <div className="flex items-center gap-1 font-mono text-[11px]">
                           {log.previousValue && (
-                            <span className="text-slate-400 line-through">{String(log.previousValue)}</span>
+                            <span className="text-zinc-400 line-through">{String(log.previousValue)}</span>
                           )}
-                          {log.previousValue && <span className="text-slate-400">&rarr;</span>}
-                          <span className="font-bold text-emerald-700">{String(log.newValue)}</span>
+                          {log.previousValue && <span className="text-zinc-300">→</span>}
+                          <span className="font-medium text-zinc-950">{String(log.newValue)}</span>
                         </div>
                       ) : (
-                        <span className="text-slate-400">&mdash;</span>
+                        <span className="text-zinc-300">—</span>
                       )}
                     </td>
 
                     {/* Reason */}
-                    <td className="py-3 px-4 text-slate-600 text-[11px] max-w-xs truncate">
-                      {log.reason || 'Standard transactional event.'}
+                    <td className="py-3 px-4 text-zinc-500 text-[11px] max-w-xs truncate">
+                      {log.reason || 'Transactional event'}
                     </td>
                   </tr>
                 ))

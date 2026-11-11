@@ -44,3 +44,4 @@ ON CONFLICT (student_code) DO NOTHING;
 INSERT INTO interviewers (id, user_id, active, timezone, title, bio, specialization, max_interviews_per_day) VALUES
 ('bbbbbbbb-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000002', TRUE, 'Asia/Kolkata', 'Principal AI Scientist & Senior Evaluator', 'Ex-Google Research Fellow with 10+ years evaluating frontier model implementations.', ARRAY['AI Models Mastery', 'Applied Generative AI'], 6)
 ON CONFLICT (id) DO NOTHING;
+

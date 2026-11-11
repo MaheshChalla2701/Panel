@@ -3,13 +3,7 @@ import { useAuth } from '../../app/providers/AuthContext';
 import { repository } from '../../services/api/repository';
 import { useToast } from '../../app/providers/ToastContext';
 import {
-  CalendarRange,
-  Clock,
-  Plus,
-  Trash2,
   Save,
-  CheckCircle2,
-  AlertCircle,
   Eye,
   ShieldCheck,
 } from 'lucide-react';
@@ -67,7 +61,6 @@ export const AvailabilityManagement: React.FC = () => {
   };
 
   const handleSave = () => {
-    // Validate overlapping windows
     for (const s of schedules) {
       if (s.startTime >= s.endTime) {
         toast({
@@ -89,7 +82,7 @@ export const AvailabilityManagement: React.FC = () => {
       toast({
         type: 'success',
         title: 'Availability Saved',
-        message: 'Your weekly working schedule has been updated in the repository.',
+        message: 'Your working schedule has been updated.',
       });
     } else {
       toast({
@@ -100,7 +93,6 @@ export const AvailabilityManagement: React.FC = () => {
     }
   };
 
-  // Preview generated slots for the preview date
   const previewDayIndex = new Date(previewDate).getDay();
   const activeDaySchedule = schedules.find((s) => s.dayOfWeek === previewDayIndex);
 
@@ -130,23 +122,22 @@ export const AvailabilityManagement: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="text-xs font-semibold text-blue-600 uppercase tracking-wider mb-1">
-              Part 5.3 — Screen 10
-            </div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">Availability & Working Hours Configuration</h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Configure recurring weekly working windows, slot intervals, buffer pauses, and preview generated student booking slots.
+            <h1 className="text-lg font-semibold text-zinc-950 tracking-tight">
+              Availability & Working Hours
+            </h1>
+            <p className="text-xs text-zinc-500 mt-0.5">
+              Set recurring weekly working windows, slot intervals, and inter-session buffers.
             </p>
           </div>
 
           <button
             onClick={handleSave}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow"
+            className="inline-flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs px-3.5 py-2 rounded-lg transition-colors shadow-xs"
           >
-            <Save className="w-4 h-4" /> Save Schedule Changes
+            <Save className="w-3.5 h-3.5" /> Save Changes
           </button>
         </div>
       </div>
@@ -154,60 +145,60 @@ export const AvailabilityManagement: React.FC = () => {
       {/* Configuration Controls */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Weekly Schedule Form (2 cols) */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h3 className="text-sm font-bold text-slate-900">Weekly Working Days & Hours</h3>
-            <span className="text-xs text-slate-500">Timezone: Asia/Kolkata (IST)</span>
+        <div className="lg:col-span-2 bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
+            <h3 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider">Weekly Schedule</h3>
+            <span className="text-xs text-zinc-400">Asia/Kolkata (IST)</span>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2">
             {DAYS.map((dayName, idx) => {
               const active = schedules.find((s) => s.dayOfWeek === idx);
 
               return (
                 <div
                   key={dayName}
-                  className={`p-4 rounded-xl border transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                    active ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-50/60 border-slate-200/60 opacity-60'
+                  className={`p-3 rounded-lg border transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 ${
+                    active ? 'bg-white border-zinc-200/80 shadow-xs' : 'bg-zinc-50/50 border-zinc-200/60 opacity-60'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     <input
                       type="checkbox"
                       id={`day-${idx}`}
                       checked={!!active}
                       onChange={() => handleToggleDay(idx)}
-                      className="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500"
+                      className="w-3.5 h-3.5 text-zinc-900 rounded border-zinc-300 focus:ring-zinc-900"
                     />
-                    <label htmlFor={`day-${idx}`} className="text-xs font-bold text-slate-800 cursor-pointer min-w-28">
+                    <label htmlFor={`day-${idx}`} className="text-xs font-medium text-zinc-800 cursor-pointer min-w-24">
                       {dayName}
                     </label>
                   </div>
 
                   {active ? (
                     <div className="flex items-center gap-2 text-xs">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-slate-400">From:</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-zinc-400 text-[11px]">Start:</span>
                         <input
                           type="time"
                           value={active.startTime}
                           onChange={(e) => handleTimeChange(idx, 'startTime', e.target.value)}
-                          className="border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold bg-slate-50"
+                          className="border border-zinc-200 rounded px-2 py-0.5 text-xs font-mono bg-white"
                         />
                       </div>
-                      <span className="text-slate-400">&mdash;</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-slate-400">To:</span>
+                      <span className="text-zinc-300">–</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-zinc-400 text-[11px]">End:</span>
                         <input
                           type="time"
                           value={active.endTime}
                           onChange={(e) => handleTimeChange(idx, 'endTime', e.target.value)}
-                          className="border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-semibold bg-slate-50"
+                          className="border border-zinc-200 rounded px-2 py-0.5 text-xs font-mono bg-white"
                         />
                       </div>
                     </div>
                   ) : (
-                    <span className="text-xs text-slate-400 italic">Day Off / Unavailable</span>
+                    <span className="text-xs text-zinc-400 italic">Unavailable</span>
                   )}
                 </div>
               );
@@ -215,13 +206,13 @@ export const AvailabilityManagement: React.FC = () => {
           </div>
 
           {/* Slot Duration & Buffer settings */}
-          <div className="pt-4 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="pt-4 border-t border-zinc-100 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Interview Slot Duration</label>
+              <label className="block text-[11px] font-medium text-zinc-600 mb-1">Slot Duration</label>
               <select
                 value={slotDuration}
                 onChange={(e) => setSlotDuration(Number(e.target.value))}
-                className="w-full text-xs font-medium border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-800"
+                className="w-full text-xs font-medium border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-zinc-800"
               >
                 <option value={30}>30 Minutes</option>
                 <option value={45}>45 Minutes (Standard GRIT)</option>
@@ -230,14 +221,14 @@ export const AvailabilityManagement: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Buffer Between Sessions</label>
+              <label className="block text-[11px] font-medium text-zinc-600 mb-1">Session Buffer</label>
               <select
                 value={bufferTime}
                 onChange={(e) => setBufferTime(Number(e.target.value))}
-                className="w-full text-xs font-medium border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-800"
+                className="w-full text-xs font-medium border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-zinc-800"
               >
                 <option value={10}>10 Minutes</option>
-                <option value={15}>15 Minutes (Recommended)</option>
+                <option value={15}>15 Minutes</option>
                 <option value={20}>20 Minutes</option>
               </select>
             </div>
@@ -245,48 +236,45 @@ export const AvailabilityManagement: React.FC = () => {
         </div>
 
         {/* Right: Slot Generator Preview */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
-                <Eye className="w-4 h-4 text-blue-600" /> Slot Generation Preview
-              </h4>
-            </div>
+        <div className="space-y-4">
+          <div className="bg-white rounded-xl border border-zinc-200/80 p-5 shadow-xs space-y-3">
+            <h4 className="text-xs font-semibold text-zinc-900 uppercase tracking-wider flex items-center gap-1.5">
+              <Eye className="w-3.5 h-3.5 text-zinc-500" /> Slot Preview
+            </h4>
 
             <div>
-              <label className="block text-[11px] font-semibold text-slate-500 mb-1">Test Preview Date</label>
+              <label className="block text-[10px] uppercase font-medium text-zinc-400 mb-1">Test Date</label>
               <input
                 type="date"
                 value={previewDate}
                 onChange={(e) => setPreviewDate(e.target.value)}
-                className="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs bg-slate-50 font-semibold"
+                className="w-full border border-zinc-200 rounded-lg px-2.5 py-1.5 text-xs bg-white"
               />
             </div>
 
-            <div className="text-xs text-slate-500">
-              Day: <strong>{DAYS[previewDayIndex]}</strong> &bull;{' '}
-              {activeDaySchedule ? (
-                <span className="text-emerald-700 font-bold">Working Day</span>
+            <div className="text-xs text-zinc-500">
+              {DAYS[previewDayIndex]} • {activeDaySchedule ? (
+                <span className="text-emerald-700 font-medium">Working Day</span>
               ) : (
-                <span className="text-rose-600 font-bold">Blocked Day</span>
+                <span className="text-zinc-400">Blocked</span>
               )}
             </div>
 
-            <div className="space-y-2 max-h-72 overflow-y-auto pt-1">
+            <div className="space-y-1.5 max-h-60 overflow-y-auto pt-1">
               {generatedPreviewSlots.length === 0 ? (
-                <div className="p-4 bg-slate-50 rounded-xl text-center text-xs text-slate-400">
-                  No slots would be generated for this day.
+                <div className="p-4 bg-zinc-50 rounded-lg text-center text-xs text-zinc-400">
+                  No slots generated for this date.
                 </div>
               ) : (
                 generatedPreviewSlots.map((s, idx) => (
                   <div
                     key={idx}
-                    className="p-2.5 rounded-lg border border-slate-200/80 bg-slate-50/50 flex items-center justify-between text-xs"
+                    className="p-2 rounded border border-zinc-200/60 bg-zinc-50/50 flex items-center justify-between text-xs font-mono"
                   >
-                    <span className="font-mono font-bold text-slate-800">
-                      {s.start} &ndash; {s.end}
+                    <span className="text-zinc-800">
+                      {s.start} – {s.end}
                     </span>
-                    <span className="text-[10px] uppercase font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+                    <span className="text-[10px] text-zinc-500 font-sans">
                       Slot #{idx + 1}
                     </span>
                   </div>
@@ -295,13 +283,13 @@ export const AvailabilityManagement: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-slate-50 rounded-2xl border border-slate-200/80 p-5 text-xs text-slate-600 space-y-2">
-            <div className="font-bold text-slate-900 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              Existing Booking Protection
+          <div className="bg-white rounded-xl border border-zinc-200/80 p-4 text-xs text-zinc-500 space-y-1 shadow-xs">
+            <div className="font-medium text-zinc-900 flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-zinc-400" />
+              Slot Protection
             </div>
-            <p className="text-[11px] leading-relaxed text-slate-500">
-              Modifying working hours will never delete or overwrite existing confirmed bookings. Any booked timeslot remains anchored to prevent student appointment disruption.
+            <p className="text-[11px] leading-relaxed text-zinc-500">
+              Updating hours will not affect already confirmed bookings. Active slots remain intact.
             </p>
           </div>
         </div>
