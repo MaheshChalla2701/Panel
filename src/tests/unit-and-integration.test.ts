@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { repository } from '../services/api/repository';
 import { evaluateStudentEligibility } from '../domain/validators/eligibilityValidator';
 import {
@@ -15,6 +15,10 @@ import { BadgeRequirement, StudentSkillProgress, Interview } from '../types';
 describe('GRIT Interview Hub — Unit & Integration Test Suite', () => {
   beforeEach(() => {
     repository.resetDemoData();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   describe('1. Eligibility Calculation Engine', () => {
@@ -226,6 +230,9 @@ describe('GRIT Interview Hub — Unit & Integration Test Suite', () => {
     });
 
     it('executes safe transactional rescheduling (atomic swap)', () => {
+      vi.useFakeTimers();
+      vi.setSystemTime(new Date('2026-11-11T00:00:00Z'));
+
       const interview = repository.getInterview('intv-1')!; // Diya Patel scheduled interview
       const student = repository.getStudent('stu-2')!;
       const openSlots = repository.getSlots().filter((s) => s.status === 'AVAILABLE');
@@ -246,6 +253,7 @@ describe('GRIT Interview Hub — Unit & Integration Test Suite', () => {
       // Old slot is released, new slot is booked
       const newSlotCheck = repository.getSlots().find((s) => s.id === targetSlot.id);
       expect(newSlotCheck?.status).toBe('BOOKED');
+
     });
   });
 

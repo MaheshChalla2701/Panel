@@ -6,6 +6,7 @@ test.describe('GRIT Interview Hub — End-to-End User Journey Scenarios', () => 
     // Ensure demo storage is reset
     await page.evaluate(() => {
       localStorage.clear();
+      localStorage.setItem('grit_assignment_demo_mode', 'true');
     });
     await page.reload();
   });

@@ -71,6 +71,7 @@ interface DatabaseState {
 }
 
 const STORAGE_KEY = 'grit_interview_hub_db_v1';
+const DEMO_MEETING_LINK = 'https://meet.google.com/bot-yiqe-yne';
 
 class Repository {
   private state: DatabaseState;
@@ -84,7 +85,17 @@ class Repository {
     try {
       const data = localStorage.getItem(STORAGE_KEY);
       if (data) {
-        return JSON.parse(data);
+        const state = JSON.parse(data) as DatabaseState;
+        if (localStorage.getItem('grit_assignment_demo_mode') === 'true') {
+          let updated = false;
+          state.interviews = state.interviews.map((interview) => {
+            if (!interview.meetingLink.includes('meet.grit.niatindia.com/room/')) return interview;
+            updated = true;
+            return { ...interview, meetingLink: DEMO_MEETING_LINK };
+          });
+          if (updated) localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+        return state;
       }
     } catch (e) {
       console.warn('Could not read from localStorage, using initial seeds', e);
@@ -104,7 +115,7 @@ class Repository {
       journeys: [...SEED_JOURNEYS],
       availability: [...SEED_AVAILABILITY],
       slots: [...SEED_SLOTS],
-      interviews: [...SEED_INTERVIEWS],
+      interviews: SEED_INTERVIEWS.map((interview) => ({ ...interview, meetingLink: DEMO_MEETING_LINK })),
       evaluations: [...SEED_EVALUATIONS],
       malpracticeCases: [...SEED_MALPRACTICE_CASES],
       badgeEvents: [...SEED_BADGE_EVENTS],
@@ -374,6 +385,11 @@ class Repository {
       slot,
       existingInterviews: studentInterviews,
       allActiveBookingsForSlot: allSlotBookings,
+      // The assignment demo intentionally runs against a fixed November 2026
+      // scenario timeline. Production/live bookings always use the real clock.
+      requestTime: localStorage.getItem('grit_assignment_demo_mode') === 'true'
+        ? new Date('2026-11-10T00:00:00.000Z')
+        : undefined,
     });
 
     if (!validation.valid) {
@@ -395,7 +411,7 @@ class Repository {
       interviewStatus: 'SCHEDULED',
       scheduledStart: slot.startAt,
       scheduledEnd: slot.endAt,
-      meetingLink: `https://meet.grit.niatindia.com/room/grit-${slot.interviewerId}-${journey.studentId.slice(-4)}`,
+      meetingLink: DEMO_MEETING_LINK,
       meetingPasscode: `GRIT${new Date(slot.startAt).getFullYear()}`,
       createdAt: nowIso,
       updatedAt: nowIso,

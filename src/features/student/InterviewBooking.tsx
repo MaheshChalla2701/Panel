@@ -13,8 +13,10 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { Interview } from '../../types';
+import { isSupabaseConfigured } from '../../services/supabase/client';
+import { LiveInterviewBooking } from './LiveInterviewBooking';
 
-export const InterviewBooking: React.FC = () => {
+const DemoInterviewBooking: React.FC = () => {
   const { currentUser } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -365,4 +367,9 @@ export const InterviewBooking: React.FC = () => {
       </div>
     </div>
   );
+};
+
+export const InterviewBooking: React.FC = () => {
+  const assignmentDemoMode = localStorage.getItem('grit_assignment_demo_mode') === 'true';
+  return isSupabaseConfigured && !assignmentDemoMode ? <LiveInterviewBooking /> : <DemoInterviewBooking />;
 };

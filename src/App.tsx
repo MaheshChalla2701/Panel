@@ -2,14 +2,22 @@ import React from 'react';
 import { AuthProvider } from './app/providers/AuthContext';
 import { ToastProvider } from './app/providers/ToastContext';
 import { AppRouter } from './app/router/AppRouter';
+import { isSupabaseConfigured } from './services/supabase/client';
+import { LiveApp } from './app/LiveApp';
 
 export const App: React.FC = () => {
+  const assignmentDemoMode = localStorage.getItem('grit_assignment_demo_mode') === 'true';
+
   return (
-    <AuthProvider>
-      <ToastProvider>
+    <ToastProvider>
+      {isSupabaseConfigured && !assignmentDemoMode ? (
+        <LiveApp />
+      ) : (
+        <AuthProvider>
         <AppRouter />
-      </ToastProvider>
-    </AuthProvider>
+        </AuthProvider>
+      )}
+    </ToastProvider>
   );
 };
 

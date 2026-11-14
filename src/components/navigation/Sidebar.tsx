@@ -53,7 +53,7 @@ export const Sidebar: React.FC = () => {
   const links = role === 'STUDENT' ? studentLinks : role === 'INTERVIEWER' ? interviewerLinks : adminLinks;
 
   return (
-    <aside className="w-60 bg-white/60 border-r border-zinc-200/80 hidden md:flex flex-col flex-shrink-0 min-h-[calc(100vh-56px)]">
+    <aside className="workspace-sidebar">
       {/* Workspace Role Label */}
       <div className="px-5 py-3.5 border-b border-zinc-100 flex items-center justify-between">
         <span className="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">
@@ -65,7 +65,7 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Navigation Links */}
-      <nav className="flex-1 p-2 space-y-0.5">
+      <nav aria-label="Workspace navigation" className="flex-1 p-2 space-y-0.5">
         {links.map((link) => {
           const Icon = link.icon;
           return (
