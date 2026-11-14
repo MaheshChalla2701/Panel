@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         // Modern minimal zinc-based neutral palette
-        grit: {
+        Panel: {
           bg: '#FAFAFA',
           surface: '#FFFFFF',
           border: '#E4E4E7', // zinc-200

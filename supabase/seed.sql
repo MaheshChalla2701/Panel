@@ -1,5 +1,5 @@
 -- ==============================================================================
--- GRIT Interview Hub — Seed Data for PostgreSQL / Supabase
+-- Panel Interview Hub — Seed Data for PostgreSQL / Supabase
 -- Realistic Seed Records for NIAT Engineering Cohort
 -- ==============================================================================
 
@@ -30,9 +30,9 @@ ON CONFLICT (badge_id, skill_id) DO NOTHING;
 
 -- 4. Seed Primary Demo Users
 INSERT INTO users (id, full_name, email, role, avatar_url, is_active) VALUES
-('00000000-0000-0000-0000-000000000001', 'Aarav Sharma', 'student@grit.demo', 'STUDENT', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150', TRUE),
-('00000000-0000-0000-0000-000000000002', 'Dr. Priya Ramanathan', 'interviewer@grit.demo', 'INTERVIEWER', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150', TRUE),
-('00000000-0000-0000-0000-000000000003', 'Chief Coordinator Vikram Roy', 'admin@grit.demo', 'ADMIN', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150', TRUE)
+('00000000-0000-0000-0000-000000000001', 'Aarav Sharma', 'student@Panel.demo', 'STUDENT', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150', TRUE),
+('00000000-0000-0000-0000-000000000002', 'Dr. Priya Ramanathan', 'interviewer@Panel.demo', 'INTERVIEWER', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150', TRUE),
+('00000000-0000-0000-0000-000000000003', 'Chief Coordinator Vikram Roy', 'admin@Panel.demo', 'ADMIN', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150', TRUE)
 ON CONFLICT (email) DO NOTHING;
 
 -- 5. Seed Students

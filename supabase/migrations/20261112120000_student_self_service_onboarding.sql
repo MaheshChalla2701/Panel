@@ -1,6 +1,6 @@
 -- Provision a complete baseline student record for every self-service signup.
 -- Badge eligibility remains an academic/administrative decision; this only
--- creates the profile required to identify the student in GRIT.
+-- creates the profile required to identify the student in Panel.
 
 CREATE UNIQUE INDEX IF NOT EXISTS students_one_profile
   ON public.students (user_id);
@@ -15,7 +15,7 @@ DECLARE
   v_profile_id uuid;
   v_student_code text := COALESCE(
     NULLIF(NEW.raw_user_meta_data ->> 'student_code', ''),
-    'GRIT-' || left(replace(NEW.id::text, '-', ''), 12)
+    'Panel-' || left(replace(NEW.id::text, '-', ''), 12)
   );
 BEGIN
   INSERT INTO public.users (auth_user_id, full_name, email, role)
@@ -51,7 +51,7 @@ $$;
 INSERT INTO public.students (user_id, student_code, batch, academic_year, college)
 SELECT
   profile.id,
-  'GRIT-' || left(replace(profile.auth_user_id::text, '-', ''), 12),
+  'Panel-' || left(replace(profile.auth_user_id::text, '-', ''), 12),
   'Cohort 2026',
   '2026-2027',
   'NIAT Hyderabad'

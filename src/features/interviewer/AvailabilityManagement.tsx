@@ -215,7 +215,7 @@ export const AvailabilityManagement: React.FC = () => {
                 className="w-full text-xs font-medium border border-zinc-200 rounded-lg px-2.5 py-1.5 bg-white text-zinc-800"
               >
                 <option value={30}>30 Minutes</option>
-                <option value={45}>45 Minutes (Standard GRIT)</option>
+                <option value={45}>45 Minutes (Standard Panel)</option>
                 <option value={60}>60 Minutes</option>
               </select>
             </div>

@@ -8,7 +8,7 @@ from reportlab.lib.units import mm
 from reportlab.platypus import KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 
-OUT = Path('output/pdf/GRIT_Interview_Hub_Round_1_Writeup.pdf')
+OUT = Path('output/pdf/Panel_Interview_Hub_Round_1_Writeup.pdf')
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
 styles = getSampleStyleSheet()
@@ -46,14 +46,14 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont('Helvetica', 7)
     canvas.setFillColor(colors.HexColor('#64748b'))
-    canvas.drawString(15 * mm, 12 * mm, 'GRIT Interview Hub - NIAT AI Product Engineer Round 1')
+    canvas.drawString(15 * mm, 12 * mm, 'Panel Interview Hub - NIAT AI Product Engineer Round 1')
     canvas.drawRightString(195 * mm, 12 * mm, f'Page {doc.page}')
     canvas.restoreState()
 
 
 doc = SimpleDocTemplate(str(OUT), pagesize=A4, leftMargin=15 * mm, rightMargin=15 * mm, topMargin=13 * mm, bottomMargin=17 * mm)
 story = [
-    p('GRIT Interview Hub', title),
+    p('Panel Interview Hub', title),
     p('AI Product Engineer - Round 1 | Product, policy, and data design', subtitle),
     p('1. Student interview journey', h),
     table(['State', 'What changes it', 'Student experience'], [
@@ -79,7 +79,8 @@ story = [
         ('Privacy', 'Students see public feedback only. Private notes and case evidence are role-scoped by row-level access.'),
     ], [46 * mm, 119 * mm]),
     PageBreak(),
-    p('GRIT Interview Hub', title),
+    Spacer(1, 13 * mm),
+    p('Panel Interview Hub', title),
     p('AI Product Engineer - Round 1 | Data model and prototype evidence', subtitle),
     p('3. Data model', h),
     p('<b>Identity and roles:</b> <i>users</i> maps Supabase Auth identities to STUDENT, INTERVIEWER, and ADMIN. <i>students</i> and <i>interviewers</i> carry role-specific profile and capacity fields.', body),

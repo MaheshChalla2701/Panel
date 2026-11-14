@@ -1,4 +1,4 @@
-# GRIT Interview Hub — Loom Video Walkthrough Script
+# Panel Interview Hub — Loom Video Walkthrough Script
 **Target Duration:** 5–7 Minutes  
 **Speaker:** Senior Product Engineer / Full-Stack Architect  
 **Audience:** Assignment Evaluator & NIAT Product Engineering Leadership
@@ -20,13 +20,13 @@ Before hitting Record on Loom, verify:
 ### [0:00 – 0:45] Introduction: Problem & Proposed Solution
 **Visual:** Student Home (`/`) showing candidate Aarav Sharma. Highlight the tagline: *"Your next milestone starts with one conversation."*
 
-> **"Hello everyone! My name is [Your Name], and I'm presenting the GRIT Interview Hub for the Round 1 AI Product Engineer assignment.**
+> **"Hello everyone! My name is [Your Name], and I'm presenting the Panel Interview Hub for the Round 1 AI Product Engineer assignment.**
 >
-> **At NIAT, GRIT is a year-long skilling competition where engineering students master futuristic tech tracks—like AI Models, GenAI, and UI Engineering. Earning a Track Badge is a hard prerequisite for Qualiflyer leaderboard rankings and fully funded international immersion trips.**
+> **At NIAT, Panel is a year-long skilling competition where engineering students master futuristic tech tracks—like AI Models, GenAI, and UI Engineering. Earning a Track Badge is a hard prerequisite for Qualiflyer leaderboard rankings and fully funded international immersion trips.**
 >
 > **However, previously there was a broken handoff: students didn’t know when their contest wins made them eligible, evaluators struggled with fragmented schedules without buffer times, and program coordinators couldn't easily track qualified candidates who hadn't booked their interviews.**
 >
-> **We designed GRIT Interview Hub as an end-to-end operational platform connecting students, evaluators, and the interview management team through an atomic, multi-dimensional state machine."**
+> **We designed Panel Interview Hub as an end-to-end operational platform connecting students, evaluators, and the interview management team through an atomic, multi-dimensional state machine."**
 
 ---
 
@@ -72,7 +72,7 @@ Before hitting Record on Loom, verify:
 
 > **"Opening Sneha's workspace, the evaluator has immediate access to her verified contest scores, Qualiflyer rank, and attempt number.**
 >
-> **Here is our structured evaluation form. It supports exactly the three official GRIT outcomes: PASS, FAIL, or RETAKE LATER.**
+> **Here is our structured evaluation form. It supports exactly the three official Panel outcomes: PASS, FAIL, or RETAKE LATER.**
 >
 > **Notice the strict separation between Student-Facing Feedback and Private Reviewer Notes. What the evaluator writes here in private notes is strictly confidential and protected by backend Row Level Security—candidates never see internal committee notes.**
 >
@@ -105,7 +105,7 @@ Before hitting Record on Loom, verify:
 ### [6:15 – 7:00] Data Architecture & Product Decisions Summary
 **Visual:** Open "System Audit Log" (`/admin/audit-logs`) showing append-only chronological history.
 
-> **"To conclude, let’s highlight the core engineering decisions behind GRIT Interview Hub:**
+> **"To conclude, let’s highlight the core engineering decisions behind Panel Interview Hub:**
 >
 > **First, we decoupled Interview Outcomes from Badge Credential Validity, preserving forensic history even if a credential is later nullified.**
 >
@@ -113,7 +113,7 @@ Before hitting Record on Loom, verify:
 >
 > **Third, our repository architecture runs seamlessly in local demo mode with full localStorage persistence and instant reset, while mirroring production PostgreSQL schemas and RLS policies.**
 >
-> **GRIT Interview Hub turns what used to be a scheduling bottleneck into an engaging, transparent, and rigorous milestone experience for thousands of engineering students. Thank you!"**
+> **Panel Interview Hub turns what used to be a scheduling bottleneck into an engaging, transparent, and rigorous milestone experience for thousands of engineering students. Thank you!"**
 
 ---
 *End of Walkthrough Script*

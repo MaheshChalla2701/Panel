@@ -14,7 +14,7 @@ BEGIN
   VALUES (
     'AI Models Mastery',
     'AI-MODELS-MASTERY-DEMO',
-    'Demo learning track for the GRIT interview workflow.',
+    'Demo learning track for the Panel interview workflow.',
     'brain',
     '#4f46e5'
   )
@@ -44,7 +44,7 @@ BEGIN
   END IF;
 
   INSERT INTO public.users (full_name, email, role)
-  VALUES ('Dr. Priya Ramanathan', 'demo.priya.ramanathan@grit.local', 'INTERVIEWER')
+  VALUES ('Dr. Priya Ramanathan', 'demo.priya.ramanathan@Panel.local', 'INTERVIEWER')
   ON CONFLICT (email) DO UPDATE
   SET full_name = EXCLUDED.full_name,
       role = EXCLUDED.role,
@@ -70,7 +70,7 @@ BEGIN
   LIMIT 1;
 
   INSERT INTO public.users (full_name, email, role)
-  VALUES ('Rahul Menon', 'demo.rahul.menon@grit.local', 'INTERVIEWER')
+  VALUES ('Rahul Menon', 'demo.rahul.menon@Panel.local', 'INTERVIEWER')
   ON CONFLICT (email) DO UPDATE
   SET full_name = EXCLUDED.full_name,
       role = EXCLUDED.role,
@@ -129,9 +129,9 @@ BEGIN
 
   INSERT INTO public.users (full_name, email, role)
   VALUES
-    ('Aarav Sharma', 'demo.aarav.sharma@grit.local', 'STUDENT'),
-    ('Meera Iyer', 'demo.meera.iyer@grit.local', 'STUDENT'),
-    ('Dev Patel', 'demo.dev.patel@grit.local', 'STUDENT')
+    ('Aarav Sharma', 'demo.aarav.sharma@Panel.local', 'STUDENT'),
+    ('Meera Iyer', 'demo.meera.iyer@Panel.local', 'STUDENT'),
+    ('Dev Patel', 'demo.dev.patel@Panel.local', 'STUDENT')
   ON CONFLICT (email) DO UPDATE
   SET full_name = EXCLUDED.full_name,
       role = EXCLUDED.role,
@@ -142,9 +142,9 @@ BEGIN
   SELECT profile.id, profile_data.student_code, 'Cohort 2026', '2026-2027', 'NIAT Hyderabad'
   FROM (
     VALUES
-      ('demo.aarav.sharma@grit.local', 'DEMO-2026-001'),
-      ('demo.meera.iyer@grit.local', 'DEMO-2026-002'),
-      ('demo.dev.patel@grit.local', 'DEMO-2026-003')
+      ('demo.aarav.sharma@Panel.local', 'DEMO-2026-001'),
+      ('demo.meera.iyer@Panel.local', 'DEMO-2026-002'),
+      ('demo.dev.patel@Panel.local', 'DEMO-2026-003')
   ) AS profile_data(email, student_code)
   JOIN public.users AS profile ON profile.email = profile_data.email
   WHERE NOT EXISTS (
@@ -162,7 +162,7 @@ BEGIN
   SELECT student.id, v_badge_id, 'ELIGIBLE', 'NOT_EARNED', NOW(), 0
   FROM public.students AS student
   JOIN public.users AS profile ON profile.id = student.user_id
-  WHERE profile.email LIKE 'demo.%@grit.local'
+  WHERE profile.email LIKE 'demo.%@Panel.local'
   ON CONFLICT (student_id, badge_id) DO NOTHING;
 END;
 $$;

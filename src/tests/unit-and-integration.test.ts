@@ -12,7 +12,7 @@ import { evaluateRetakeEligibility } from '../domain/policies/retakePolicy';
 import { validateBookingRequest, validateRescheduleRequest } from '../domain/policies/bookingPolicy';
 import { BadgeRequirement, StudentSkillProgress, Interview } from '../types';
 
-describe('GRIT Interview Hub — Unit & Integration Test Suite', () => {
+describe('Panel Interview Hub — Unit & Integration Test Suite', () => {
   beforeEach(() => {
     repository.resetDemoData();
   });

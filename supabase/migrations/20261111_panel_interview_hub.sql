@@ -1,5 +1,5 @@
 -- ==============================================================================
--- GRIT Interview Hub — PostgreSQL & Supabase Database Migration
+-- Panel Interview Hub — PostgreSQL & Supabase Database Migration
 -- Production Schema for Track Badge Live Interview Orchestration
 -- ==============================================================================
 
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS interviews (
     interview_status TEXT NOT NULL CHECK (interview_status IN ('SCHEDULED', 'STUDENT_CHECKED_IN', 'IN_PROGRESS', 'COMPLETED', 'NO_SHOW', 'CANCELLED', 'RESCHEDULED')),
     scheduled_start TIMESTAMPTZ NOT NULL,
     scheduled_end TIMESTAMPTZ NOT NULL,
-    meeting_link TEXT NOT NULL DEFAULT 'https://meet.grit.niatindia.com/room/',
+    meeting_link TEXT NOT NULL DEFAULT 'https://meet.Panel.niatindia.com/room/',
     meeting_passcode TEXT,
     cancelled_at TIMESTAMPTZ,
     cancellation_reason TEXT,

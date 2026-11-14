@@ -1,5 +1,5 @@
 -- Live booking: authentication, authorization, atomic reservation, and Realtime.
--- Apply after 20261111_grit_interview_hub.sql.
+-- Apply after 20261111_Panel_interview_hub.sql.
 
 -- Auth accounts are mapped explicitly so the existing institutional user IDs
 -- and seed data remain valid.

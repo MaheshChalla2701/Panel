@@ -7,4 +7,4 @@ ALTER TABLE public.interviews
 
 UPDATE public.interviews
 SET meeting_link = 'https://meet.google.com/bot-yiqe-yne'
-WHERE meeting_link LIKE 'https://meet.grit.niatindia.com/room/%';
+WHERE meeting_link LIKE 'https://meet.Panel.niatindia.com/room/%';

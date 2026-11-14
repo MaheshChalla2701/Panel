@@ -1,7 +1,7 @@
-# GRIT Interview Hub - Loom Recording Script (about 3 minutes)
+# Panel Interview Hub - Loom Recording Script (about 3 minutes)
 
 ## 0:00-0:25 - Problem and approach
-“GRIT students complete the required skills for a track badge, then need a live interview before the badge is awarded. I designed the Interview Hub around three roles: student, interviewer, and operations admin. The key decision was to keep eligibility, booking, interview, evaluation, and badge validity as separate states, so later malpractice reviews do not erase an interview record.”
+“Panel students complete the required skills for a track badge, then need a live interview before the badge is awarded. I designed the Interview Hub around three roles: student, interviewer, and operations admin. The key decision was to keep eligibility, booking, interview, evaluation, and badge validity as separate states, so later malpractice reviews do not erase an interview record.”
 
 ## 0:25-1:10 - Student flow
 “I’ll start in the Student portal. The eligibility screen explains which skill requirements are complete and when booking unlocks. An eligible student can filter real evaluator slots and reserve one. The booking action is atomic: the database locks the slot so two students cannot receive the same time. After booking, the student sees the date, evaluator, interview status, and later the result. The important student messages are: eligibility achieved, booking confirmed, and the official result or review notice.”

@@ -1,12 +1,12 @@
 # State Machine & Business Logic Specification
-**Platform:** GRIT Interview Hub  
+**Platform:** Panel Interview Hub  
 **Engine File:** `src/domain/state-machines/transitions.ts`
 
 ---
 
 ## 1. Architectural Philosophy
 
-Candidate progress through the GRIT Track Badge interview milestone is governed by **decoupled state machines** rather than a single monolithic status field. Collapsing eligibility, booking, attendance, evaluation outcomes, and institutional badge awards into one field causes severe state collisions (e.g., losing interview attempt history if a badge is later investigated for malpractice).
+Candidate progress through the Panel Track Badge interview milestone is governed by **decoupled state machines** rather than a single monolithic status field. Collapsing eligibility, booking, attendance, evaluation outcomes, and institutional badge awards into one field causes severe state collisions (e.g., losing interview attempt history if a badge is later investigated for malpractice).
 
 The system maintains 5 independent lifecycles:
 1. **Eligibility Status**

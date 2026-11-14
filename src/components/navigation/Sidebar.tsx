@@ -97,7 +97,7 @@ export const Sidebar: React.FC = () => {
 
       {/* Subtle Footer Note */}
       <div className="p-4 border-t border-zinc-100 text-[11px] text-zinc-400">
-        <div>GRIT Platform 2026</div>
+        <div>Panel Platform 2026</div>
         <div className="text-[10px] text-zinc-400/80 mt-0.5">NIAT Academic Integrity</div>
       </div>
     </aside>

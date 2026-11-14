@@ -22,7 +22,7 @@ export const SEED_USERS: User[] = [
   {
     id: 'user-stu-1',
     fullName: 'Aarav Sharma',
-    email: 'student@grit.demo',
+    email: 'student@Panel.demo',
     role: 'STUDENT',
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     isActive: true,
@@ -32,7 +32,7 @@ export const SEED_USERS: User[] = [
   {
     id: 'user-int-1',
     fullName: 'Dr. Priya Ramanathan',
-    email: 'interviewer@grit.demo',
+    email: 'interviewer@Panel.demo',
     role: 'INTERVIEWER',
     avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
     isActive: true,
@@ -42,7 +42,7 @@ export const SEED_USERS: User[] = [
   {
     id: 'user-adm-1',
     fullName: 'Chief Coordinator Vikram Roy',
-    email: 'admin@grit.demo',
+    email: 'admin@Panel.demo',
     role: 'ADMIN',
     avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
     isActive: true,
@@ -54,7 +54,7 @@ export const SEED_USERS: User[] = [
   {
     id: 'user-int-2',
     fullName: 'Karan Verma',
-    email: 'karan.verma@grit.niatindia.com',
+    email: 'karan.verma@Panel.niatindia.com',
     role: 'INTERVIEWER',
     avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
     isActive: true,
@@ -64,7 +64,7 @@ export const SEED_USERS: User[] = [
   {
     id: 'user-int-3',
     fullName: 'Ananya Sen',
-    email: 'ananya.sen@grit.niatindia.com',
+    email: 'ananya.sen@Panel.niatindia.com',
     role: 'INTERVIEWER',
     avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
     isActive: true,
@@ -693,8 +693,8 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'SCHEDULED',
     scheduledStart: '2026-11-12T10:00:00Z',
     scheduledEnd: '2026-11-12T10:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0102',
-    meetingPasscode: 'GRIT2026',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0102',
+    meetingPasscode: 'Panel2026',
     createdAt: '2026-11-09T10:30:00Z',
     updatedAt: '2026-11-09T10:30:00Z',
   },
@@ -709,7 +709,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'COMPLETED',
     scheduledStart: '2026-11-11T10:00:00Z',
     scheduledEnd: '2026-11-11T10:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0104',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0104',
     completedAt: '2026-11-11T10:45:00Z',
     createdAt: '2026-11-08T11:00:00Z',
     updatedAt: '2026-11-11T10:45:00Z',
@@ -725,7 +725,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'COMPLETED',
     scheduledStart: '2026-11-02T14:00:00Z',
     scheduledEnd: '2026-11-02T14:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0105',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0105',
     completedAt: '2026-11-02T14:45:00Z',
     createdAt: '2026-10-27T09:00:00Z',
     updatedAt: '2026-11-02T15:30:00Z',
@@ -741,7 +741,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'COMPLETED',
     scheduledStart: '2026-11-04T15:00:00Z',
     scheduledEnd: '2026-11-04T15:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0106',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0106',
     completedAt: '2026-11-04T15:45:00Z',
     createdAt: '2026-10-29T10:00:00Z',
     updatedAt: '2026-11-04T16:00:00Z',
@@ -757,7 +757,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'COMPLETED',
     scheduledStart: '2026-10-28T16:00:00Z',
     scheduledEnd: '2026-10-28T16:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0107',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0107',
     completedAt: '2026-10-28T16:45:00Z',
     createdAt: '2026-10-22T08:00:00Z',
     updatedAt: '2026-10-28T17:00:00Z',
@@ -773,7 +773,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'NO_SHOW',
     scheduledStart: '2026-11-11T11:00:00Z',
     scheduledEnd: '2026-11-11T11:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0110',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0110',
     completedAt: '2026-11-11T11:20:00Z',
     createdAt: '2026-11-07T12:00:00Z',
     updatedAt: '2026-11-11T11:20:00Z',
@@ -789,7 +789,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'SCHEDULED',
     scheduledStart: '2026-11-13T11:00:00Z',
     scheduledEnd: '2026-11-13T11:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ui-karan-0111',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ui-karan-0111',
     meetingPasscode: 'UIENG2026',
     createdAt: '2026-11-08T14:00:00Z',
     updatedAt: '2026-11-08T14:00:00Z',
@@ -805,7 +805,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'CANCELLED',
     scheduledStart: '2026-11-10T14:00:00Z',
     scheduledEnd: '2026-11-10T14:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-cancelled-0115',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-cancelled-0115',
     cancelledAt: '2026-11-09T18:00:00Z',
     cancellationReason: 'Academic exam conflict on campus.',
     createdAt: '2026-11-06T10:00:00Z',
@@ -822,7 +822,7 @@ export const SEED_INTERVIEWS: Interview[] = [
     interviewStatus: 'SCHEDULED',
     scheduledStart: '2026-11-13T10:00:00Z',
     scheduledEnd: '2026-11-13T10:45:00Z',
-    meetingLink: 'https://meet.grit.niatindia.com/room/grit-ds-ananya-0117',
+    meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ds-ananya-0117',
     meetingPasscode: 'DSML2026',
     createdAt: '2026-11-09T16:00:00Z',
     updatedAt: '2026-11-09T16:00:00Z',
@@ -979,7 +979,7 @@ export const SEED_BADGE_EVENTS: BadgeEvent[] = [
 ];
 
 export const SEED_NOTIFICATIONS: Notification[] = [
-  // Notifications for Aarav Sharma (stu-1 / student@grit.demo)
+  // Notifications for Aarav Sharma (stu-1 / student@Panel.demo)
   {
     id: 'notif-1',
     userId: 'user-stu-1',
@@ -1014,7 +1014,7 @@ export const SEED_NOTIFICATIONS: Notification[] = [
     createdAt: '2026-11-02T15:30:00Z',
     readAt: '2026-11-02T16:00:00Z',
   },
-  // Notifications for Dr. Priya Ramanathan (user-int-1 / interviewer@grit.demo)
+  // Notifications for Dr. Priya Ramanathan (user-int-1 / interviewer@Panel.demo)
   {
     id: 'notif-4',
     userId: 'user-int-1',
@@ -1035,7 +1035,7 @@ export const SEED_NOTIFICATIONS: Notification[] = [
     relatedEntityId: 'intv-2',
     createdAt: '2026-11-11T10:45:00Z',
   },
-  // Notifications for Admin (user-adm-1 / admin@grit.demo)
+  // Notifications for Admin (user-adm-1 / admin@Panel.demo)
   {
     id: 'notif-6',
     userId: 'user-adm-1',

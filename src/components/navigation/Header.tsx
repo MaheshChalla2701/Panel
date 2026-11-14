@@ -32,7 +32,7 @@ export const Header: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <span className="font-semibold text-zinc-950 text-sm tracking-tight">
-                GRIT Interview Hub
+                Panel Interview Hub
               </span>
               <span className="text-[10px] font-medium px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-600 border border-zinc-200">
                 NIAT

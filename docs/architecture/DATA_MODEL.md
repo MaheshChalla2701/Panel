@@ -1,7 +1,7 @@
 # Database Architecture & Data Model Specification
-**Platform:** GRIT Interview Hub  
+**Platform:** Panel Interview Hub  
 **Database Engine:** PostgreSQL 15 / Supabase  
-**Schema File:** `supabase/migrations/20261111_grit_interview_hub.sql`
+**Schema File:** `supabase/migrations/20261111_Panel_interview_hub.sql`
 
 ---
 
@@ -34,14 +34,14 @@ Core user identity for students, evaluators, and system coordinators.
 - `created_at`, `updated_at` (TIMESTAMPTZ).
 
 ### 2.2 `students`
-GRIT candidate demographic and Qualiflyer leaderboard profile.
+Panel candidate demographic and Qualiflyer leaderboard profile.
 - `id` (UUID, Primary Key).
 - `user_id` (UUID, UNIQUE, FK &rarr; `users.id` ON DELETE CASCADE).
 - `student_code` (TEXT, UNIQUE, NOT NULL): Format `NIAT-YYYY-XXXX`.
 - `batch` (TEXT, NOT NULL): e.g., `2023-2027`.
 - `academic_year` (TEXT, NOT NULL): e.g., `3rd Year`.
 - `college` (TEXT, NOT NULL): Campus name (e.g., `NIAT Hyderabad Main Campus`).
-- `miles_earned` (INTEGER, DEFAULT 0): Total GRIT Miles scored in contests.
+- `miles_earned` (INTEGER, DEFAULT 0): Total Panel Miles scored in contests.
 - `qualiflyer_rank` (INTEGER, DEFAULT 0): Dynamic leaderboard ranking.
 
 ### 2.3 `interviewers`

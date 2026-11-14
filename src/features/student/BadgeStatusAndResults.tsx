@@ -106,7 +106,7 @@ export const BadgeStatusAndResults: React.FC = () => {
                 Official Track Badge Awarded
               </div>
               <p className="text-xs text-zinc-700 leading-relaxed max-w-2xl">
-                "Congratulations! You have successfully passed your Track Badge interview. Your Specialist Badge has been awarded and your achievement has been recorded on your profile. Keep pushing forward in the GRIT competition!"
+                "Congratulations! You have successfully passed your Track Badge interview. Your Specialist Badge has been awarded and your achievement has been recorded on your profile. Keep pushing forward in the Panel competition!"
               </p>
             </div>
           </div>

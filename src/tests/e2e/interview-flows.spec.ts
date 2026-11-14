@@ -1,12 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('GRIT Interview Hub — End-to-End User Journey Scenarios', () => {
+test.describe('Panel Interview Hub — End-to-End User Journey Scenarios', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
     // Ensure demo storage is reset
     await page.evaluate(() => {
       localStorage.clear();
-      localStorage.setItem('grit_assignment_demo_mode', 'true');
+      localStorage.setItem('Panel_assignment_demo_mode', 'true');
     });
     await page.reload();
   });
@@ -61,7 +61,7 @@ test.describe('GRIT Interview Hub — End-to-End User Journey Scenarios', () => 
 
     // 6. Verify candidate sees Passed outcome and awarded badge
     await page.evaluate(() => {
-      localStorage.setItem('grit_current_user_id', 'user-stu-4');
+      localStorage.setItem('Panel_current_user_id', 'user-stu-4');
     });
     await page.goto('/badge-status');
     await expect(page.getByText(/Cleared your interview!|Official Track Badge Awarded/i)).toBeVisible();

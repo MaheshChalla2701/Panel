@@ -1,5 +1,5 @@
 # Critical Product Edge Cases & Assumptions
-**Platform:** GRIT Interview Hub  
+**Platform:** Panel Interview Hub  
 **Document Classification:** Product Reliability & QA Specifications
 
 ---
@@ -32,9 +32,9 @@
 
 ---
 
-## 2. Confirmed GRIT Rules vs. Documented Engineering Assumptions
+## 2. Confirmed Panel Rules vs. Documented Engineering Assumptions
 
-| Dimension | Confirmed GRIT Official Specification | Engineering Prototype Assumption & Trade-Off |
+| Dimension | Confirmed Panel Official Specification | Engineering Prototype Assumption & Trade-Off |
 | :--- | :--- | :--- |
 | **Tracks** | 4 primary tracks: AI Models Mastery, Applied GenAI Development, UI Engineering, Data Science & Machine Learning. | Implemented as 4 fully configured tracks with custom icons, colors, and descriptions. |
 | **Contest Milestones** | Students must earn at least one Track Badge to qualify for international immersion trips. | Designed 7 specific badge tiers across the 4 tracks, with 10 exact skill rubrics. |

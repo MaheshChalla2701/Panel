@@ -83,7 +83,7 @@ const LiveEntry: React.FC<{ onAuthenticated: (role: UserRole) => Promise<void>; 
           <div className="relative">
             <div className="flex items-center gap-3">
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-white text-sm font-bold text-zinc-950 shadow-lg shadow-black/20">G</div>
-              <div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">NIAT</p><p className="mt-0.5 text-sm font-semibold tracking-tight">GRIT Interview Hub</p></div>
+              <div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">NIAT</p><p className="mt-0.5 text-sm font-semibold tracking-tight">Panel Interview Hub</p></div>
             </div>
             <div className="mt-10 max-w-md md:mt-14">
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-medium text-zinc-300"><Sparkles className="h-3.5 w-3.5 text-indigo-300" /> Secure interview operations</div>
@@ -137,8 +137,8 @@ const LiveShell: React.FC<{ profile: LiveProfile; onSignOut: () => Promise<void>
   const navigate = useNavigate();
   const handleSignOut = async () => { await onSignOut(); navigate('/', { replace: true }); };
   return (
-    <div className="grit-workspace live-workspace min-h-screen text-zinc-950">
-      <header className="border-b border-zinc-200 bg-white"><div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6"><div><p className="text-sm font-semibold">GRIT Interview Hub</p><p className="text-[11px] text-zinc-500">NIAT · {profile.role}</p></div><div className="flex items-center gap-3"><div className="hidden text-right sm:block"><p className="text-xs font-medium">{profile.fullName}</p><p className="text-[11px] text-zinc-500">{profile.email}</p></div><button type="button" onClick={handleSignOut} className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-700 hover:bg-zinc-50"><LogOut className="h-3.5 w-3.5" />Sign out</button></div></div></header>
+    <div className="Panel-workspace live-workspace min-h-screen text-zinc-950">
+      <header className="border-b border-zinc-200 bg-white"><div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6"><div><p className="text-sm font-semibold">Panel Interview Hub</p><p className="text-[11px] text-zinc-500">NIAT · {profile.role}</p></div><div className="flex items-center gap-3"><div className="hidden text-right sm:block"><p className="text-xs font-medium">{profile.fullName}</p><p className="text-[11px] text-zinc-500">{profile.email}</p></div><button type="button" onClick={handleSignOut} className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 px-3 py-2 text-xs font-medium text-zinc-700 hover:bg-zinc-50"><LogOut className="h-3.5 w-3.5" />Sign out</button></div></div></header>
       <main className="workspace-content mx-auto w-full max-w-6xl p-4 sm:p-6 lg:p-8">
         <div className="mb-4 flex justify-end"><button type="button" onClick={onOpenDemo} className="rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-700 hover:bg-indigo-100">Open assignment demo</button></div>
         <div className="workspace-welcome"><span className="workspace-eyebrow">Your workspace</span><h1>Hello, {profile.fullName.split(' ')[0]}</h1><p>{profile.role === 'STUDENT' ? 'Take the next step toward your track badge.' : 'Your interview programme, in one place.'}</p></div>
@@ -167,7 +167,7 @@ export const LiveApp: React.FC = () => {
     const { data: authData, error: authError } = await supabase.auth.getUser();
     if (authError || !authData.user) { setProfile(null); setLoading(false); return; }
     const { data, error: profileError } = await supabase.from('users').select('id, full_name, email, role').eq('auth_user_id', authData.user.id).maybeSingle();
-    if (profileError || !data) { await supabase.auth.signOut(); setProfile(null); setError(profileError ? readError(profileError, 'Your account profile could not be loaded.') : 'This account has not been provisioned for GRIT.'); setLoading(false); return; }
+    if (profileError || !data) { await supabase.auth.signOut(); setProfile(null); setError(profileError ? readError(profileError, 'Your account profile could not be loaded.') : 'This account has not been provisioned for Panel.'); setLoading(false); return; }
     const resolvedProfile: LiveProfile = { id: data.id, fullName: data.full_name, email: data.email, role: data.role as UserRole };
     if (expectedRole && resolvedProfile.role !== expectedRole) { await supabase.auth.signOut(); setProfile(null); setError(`This account is assigned the ${resolvedProfile.role.toLowerCase()} role. Select that portal to sign in.`); setLoading(false); return; }
     setProfile(resolvedProfile); setLoading(false);
@@ -182,7 +182,7 @@ export const LiveApp: React.FC = () => {
 
   if (loading) return <main className="grid min-h-screen place-items-center bg-zinc-950 text-sm text-zinc-300">Loading secure access...</main>;
   const openAssignmentDemo = () => {
-    localStorage.setItem('grit_assignment_demo_mode', 'true');
+    localStorage.setItem('Panel_assignment_demo_mode', 'true');
     window.location.reload();
   };
   return profile ? <BrowserRouter><Routes><Route path="*" element={<LiveShell profile={profile} onOpenDemo={openAssignmentDemo} onSignOut={async () => { await supabase?.auth.signOut(); setProfile(null); }} />} /></Routes></BrowserRouter> : <LiveEntry onAuthenticated={loadProfile} error={error} onOpenDemo={openAssignmentDemo} />;

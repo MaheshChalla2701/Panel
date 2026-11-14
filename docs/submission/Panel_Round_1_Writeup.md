@@ -1,4 +1,4 @@
-# GRIT Interview Hub - Round 1 Write-up
+# Panel Interview Hub - Round 1 Write-up
 
 ## 1. Student interview journey
 

@@ -280,7 +280,7 @@ export const MyInterviews: React.FC = () => {
                 >
                   {selectedInterview.meetingLink}
                 </a>
-                <div className="text-[11px] text-zinc-500">Passcode: {selectedInterview.meetingPasscode || 'GRIT2026'}</div>
+                <div className="text-[11px] text-zinc-500">Passcode: {selectedInterview.meetingPasscode || 'Panel2026'}</div>
               </div>
 
               {selectedInterview.cancellationReason && (

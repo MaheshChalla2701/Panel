@@ -38,39 +38,39 @@
 
 /* Shared presentation for every student, evaluator and operations screen. */
 :root {
-  --grit-ink: #18243b;
-  --grit-accent: #4338ca;
-  --grit-canvas: #f4f6fb;
-  --grit-line: #e4e8f0;
+  --Panel-ink: #18243b;
+  --Panel-accent: #4338ca;
+  --Panel-canvas: #f4f6fb;
+  --Panel-line: #e4e8f0;
 }
-body { background: var(--grit-canvas); }
+body { background: var(--Panel-canvas); }
 button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 3px solid #818cf8;
   outline-offset: 3px;
 }
-.grit-workspace { background: var(--grit-canvas); color: var(--grit-ink); }
-.grit-workspace > header { border-color: var(--grit-line); box-shadow: 0 2px 12px #18243b04; }
-.grit-workspace > header > div { min-height: 72px; }
+.Panel-workspace { background: var(--Panel-canvas); color: var(--Panel-ink); }
+.Panel-workspace > header { border-color: var(--Panel-line); box-shadow: 0 2px 12px #18243b04; }
+.Panel-workspace > header > div { min-height: 72px; }
 .workspace-body { min-width: 0; }
 .workspace-sidebar {
   display: flex; flex-direction: column; flex: 0 0 244px; width: 244px;
-  background: white; border-right: 1px solid var(--grit-line);
+  background: white; border-right: 1px solid var(--Panel-line);
   min-height: calc(100vh - 72px);
 }
 .workspace-sidebar nav { padding: 20px 12px; }
 .workspace-sidebar nav a { min-height: 46px; margin-bottom: 5px; border-radius: 10px; font-size: 13px; }
-.workspace-sidebar nav a[aria-current="page"] { background: #eef0ff; color: var(--grit-accent); font-weight: 600; }
-.workspace-sidebar nav a[aria-current="page"] svg { color: var(--grit-accent); }
+.workspace-sidebar nav a[aria-current="page"] { background: #eef0ff; color: var(--Panel-accent); font-weight: 600; }
+.workspace-sidebar nav a[aria-current="page"] svg { color: var(--Panel-accent); }
 .workspace-sidebar nav a:hover { background: #f4f5fb; }
 .workspace-content { min-width: 0; padding: 32px; }
-.workspace-content h1 { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.25; letter-spacing: -.035em; color: var(--grit-ink); }
+.workspace-content h1 { font-size: clamp(22px, 2.2vw, 30px); line-height: 1.25; letter-spacing: -.035em; color: var(--Panel-ink); }
 .workspace-content h2 { letter-spacing: -.02em; }
 .workspace-content .text-xs { font-size: 13px; line-height: 1.6; }
 .workspace-content .text-zinc-400 { color: #718096; }
 .workspace-content .text-zinc-500 { color: #647085; }
 .workspace-content :is(div, section).bg-white.rounded-xl {
-  border-color: var(--grit-line); border-radius: 16px;
+  border-color: var(--Panel-line); border-radius: 16px;
   box-shadow: 0 3px 14px #18243b04;
 }
 .workspace-content > div > .bg-white:first-child { padding: 26px; }
@@ -78,12 +78,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   border-color: #dce2ec; border-radius: 9px; min-height: 42px;
   padding: 10px 12px; font-size: 14px; background-color: white;
 }
-.workspace-content input[type="checkbox"] { accent-color: var(--grit-accent); }
+.workspace-content input[type="checkbox"] { accent-color: var(--Panel-accent); }
 .workspace-content input.pl-9, .workspace-content input.pl-10, .workspace-content input.pl-8 { padding-left: 38px; }
 .workspace-content .relative:has(> input) > svg.absolute { top: 50%; transform: translateY(-50%); }
 .workspace-content textarea { min-height: 112px; }
 .workspace-content button { transition: background-color .15s, border-color .15s, box-shadow .15s; }
-.workspace-content :is(button,a).bg-zinc-900 { background: var(--grit-accent); box-shadow: 0 3px 8px #4338ca18; }
+.workspace-content :is(button,a).bg-zinc-900 { background: var(--Panel-accent); box-shadow: 0 3px 8px #4338ca18; }
 .workspace-content :is(button,a).bg-zinc-900:hover { background: #3730a3; }
 .workspace-content button:not(:disabled):hover { border-color: #a5b4fc; }
 .workspace-content button:disabled { cursor: not-allowed; }
@@ -94,14 +94,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .workspace-content tbody tr:hover { background: #fafbff; }
 .workspace-content .overflow-x-auto { border-radius: 12px; }
 .workspace-welcome { margin: 8px 0 28px; }
-.workspace-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--grit-accent); }
+.workspace-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--Panel-accent); }
 .workspace-welcome h1 { margin: 8px 0; }
 .workspace-welcome p { font-size: 14px; color: #647085; }
-.workspace-empty { padding: 48px 28px; text-align: center; background: white; border: 1px solid var(--grit-line); border-radius: 16px; }
-.workspace-empty > svg { width: 48px; height: 48px; padding: 12px; background: #eef0ff; color: var(--grit-accent); border-radius: 14px; margin: 0 auto 20px; }
+.workspace-empty { padding: 48px 28px; text-align: center; background: white; border: 1px solid var(--Panel-line); border-radius: 16px; }
+.workspace-empty > svg { width: 48px; height: 48px; padding: 12px; background: #eef0ff; color: var(--Panel-accent); border-radius: 14px; margin: 0 auto 20px; }
 .workspace-empty h2 { font-size: 20px; font-weight: 600; }
 .workspace-empty p { max-width: 460px; margin: 10px auto 0; color: #647085; font-size: 14px; line-height: 1.7; }
-.workspace-empty button { margin-top: 20px; padding: 10px 20px; background: #eef0ff; color: var(--grit-accent); border-radius: 8px; font-size: 13px; font-weight: 600; }
+.workspace-empty button { margin-top: 20px; padding: 10px 20px; background: #eef0ff; color: var(--Panel-accent); border-radius: 8px; font-size: 13px; font-weight: 600; }
 
 /* Explicit layout keeps authentication independent of utility breakpoints. */
 .auth-page {
@@ -129,12 +129,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .auth-intro section button span.truncate { white-space: normal; font-size: 12px; line-height: 1.45; }
 .auth-form-panel { display: flex; align-items: center; padding: 40px; background: white; min-width: 0; }
 .auth-form-panel form { width: 100%; max-width: 380px; }
-.auth-form-panel h2 { font-size: 28px; color: var(--grit-ink); }
+.auth-form-panel h2 { font-size: 28px; color: var(--Panel-ink); }
 .auth-form-panel input { min-height: 48px; border-radius: 10px; background: #fafbfe; font-size: 15px; font-weight: 400; }
 .auth-form-panel input:focus { border-color: #818cf8; box-shadow: 0 0 0 3px #eef2ff; }
-.auth-form-panel button[type="submit"] { min-height: 48px; background: var(--grit-accent); box-shadow: 0 4px 12px #4338ca20; transform: none; }
+.auth-form-panel button[type="submit"] { min-height: 48px; background: var(--Panel-accent); box-shadow: 0 4px 12px #4338ca20; transform: none; }
 .auth-form-panel button[type="submit"]:hover { background: #3730a3; }
-.auth-form-panel button[type="button"] { min-height: 44px; color: var(--grit-accent); }
+.auth-form-panel button[type="button"] { min-height: 44px; color: var(--Panel-accent); }
 @media (max-width: 900px) {
   .workspace-sidebar { flex-basis: 212px; width: 212px; }
   .workspace-content { padding: 24px; }
@@ -157,14 +157,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .auth-form-panel form > div.mb-8 > div:first-child { display: none; }
   .auth-form-panel form > div.mb-8 > p:first-of-type { margin-top: 0; }
   .workspace-body { flex-direction: column; }
-  .workspace-sidebar { display: block; width: 100%; flex: none; min-height: 0; border-right: 0; border-bottom: 1px solid var(--grit-line); }
+  .workspace-sidebar { display: block; width: 100%; flex: none; min-height: 0; border-right: 0; border-bottom: 1px solid var(--Panel-line); }
   .workspace-sidebar > div { display: none; }
   .workspace-sidebar nav { display: flex; gap: 6px; padding: 10px 12px; overflow-x: auto; }
   .workspace-sidebar nav a { flex: none; min-height: 42px; white-space: nowrap; margin: 0; }
   .workspace-sidebar nav a > span { display: none; }
   .workspace-content { padding: 20px 16px; }
   .workspace-content > div > .bg-white:first-child { padding: 20px; }
-  .grit-workspace > header > div { min-height: 64px; }
+  .Panel-workspace > header > div { min-height: 64px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }

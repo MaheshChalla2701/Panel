@@ -147,7 +147,7 @@ const DemoInterviewBooking: React.FC = () => {
             </div>
             <div className="flex items-center justify-between">
               <span className="text-zinc-500">Passcode</span>
-              <span className="font-mono font-medium text-zinc-700">{confirmedInterview.meetingPasscode || 'GRIT2026'}</span>
+              <span className="font-mono font-medium text-zinc-700">{confirmedInterview.meetingPasscode || 'Panel2026'}</span>
             </div>
             <div className="flex items-center justify-between pt-2 border-t border-zinc-200/60 text-[11px] text-zinc-400">
               <span>Policy</span>
@@ -370,6 +370,6 @@ const DemoInterviewBooking: React.FC = () => {
 };
 
 export const InterviewBooking: React.FC = () => {
-  const assignmentDemoMode = localStorage.getItem('grit_assignment_demo_mode') === 'true';
+  const assignmentDemoMode = localStorage.getItem('Panel_assignment_demo_mode') === 'true';
   return isSupabaseConfigured && !assignmentDemoMode ? <LiveInterviewBooking /> : <DemoInterviewBooking />;
 };

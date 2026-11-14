@@ -1,6 +1,6 @@
-# GRIT Interview Hub — Product Design & Technical Approach
+# Panel Interview Hub — Product Design & Technical Approach
 **Author:** Senior Product Engineering Team  
-**Program:** NIAT GRIT (Global Readiness Immersion Trips)  
+**Program:** NIAT Panel  
 **Document Classification:** Product Architecture & Engineering Submission &bull; Round 1 Assignment
 
 ---
@@ -8,14 +8,14 @@
 ## PAGE 1
 
 ### 1. Problem Understanding & User Context
-GRIT is a competitive year-long engineering upskilling ecosystem at NIAT. Students complete intensive skill contests and advance through structured track badge tiers (*AI Models Mastery, Applied GenAI Development, UI Engineering, Data Science & Machine Learning*). To earn a verified Track Badge—a prerequisite for Qualiflyer leaderboard rankings and fully funded international immersion trips—a candidate must clear a 45-minute live technical interview with an expert evaluator.
+Panel is a competitive year-long engineering upskilling ecosystem at NIAT. Students complete intensive skill contests and advance through structured track badge tiers (*AI Models Mastery, Applied GenAI Development, UI Engineering, Data Science & Machine Learning*). To earn a verified Track Badge—a prerequisite for Qualiflyer leaderboard rankings and fully funded international immersion trips—a candidate must clear a 45-minute live technical interview with an expert evaluator.
 
 Prior to this system, interview scheduling suffered from fragmented coordination:
 1. **Students** lacked clarity on whether skill contest completions translated to interview eligibility.
 2. **Interviewers** faced manual scheduling conflicts, unbuffered sessions, and informal note-taking.
 3. **Operations Admins** had no consolidated visibility into eligible candidates who failed to book slots, causing high drop-off before international selections.
 
-**GRIT Interview Hub** addresses this challenge through three unified roles:
+**Panel Interview Hub** addresses this challenge through three unified roles:
 - **Student Portal:** Real-time contest audit, atomic slot reservation, cancellation/rescheduling within policy, structured feedback review, and badge credential tracking.
 - **Interviewer Workspace:** Recurring availability configuration, buffered slot generation, isolated candidate dossiers, and structured rubric evaluations with strict separation between public student feedback and private reviewer notes.
 - **Admin Command Center:** Real-time conversion analytics, unbooked student identification and automated nudges, evaluator workload balancing, auditable malpractice adjudication, and append-only event logging.
@@ -131,7 +131,7 @@ To maximize interview completion velocity, the Admin Operations dashboard calcul
 
 ### 6. Documented Assumptions
 
-| Area | Confirmed GRIT Official Reference | Engineering Prototype Assumption |
+| Area | Confirmed Panel Official Reference | Engineering Prototype Assumption |
 | :--- | :--- | :--- |
 | **Track Structure** | 4 primary tracks: AI Models, GenAI Development, UI Engineering, Data Science & ML. | Fictional 20-student cohort across 3 campuses (Hyderabad, Bangalore, Pune) for demonstration. |
 | **Badge Criteria** | Mandatory completion of all required track skill contests before interview unlocks. | Minimum passing threshold set to 80% on skill contests; evaluated automatically via rubric. |
@@ -140,5 +140,5 @@ To maximize interview completion velocity, the Admin Operations dashboard calcul
 | **Malpractice Process** | Badges can be nullified later following verified malpractice investigation. | Neutral, non-accusatory notifications used during active reviews; formal justification required for nullification. |
 
 ---
-*GRIT Interview Hub &bull; NIAT Engineering &bull; Production Prototype Documentation*
+*Panel Interview Hub &bull; NIAT Engineering &bull; Production Prototype Documentation*
 

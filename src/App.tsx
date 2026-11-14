@@ -6,7 +6,7 @@ import { isSupabaseConfigured } from './services/supabase/client';
 import { LiveApp } from './app/LiveApp';
 
 export const App: React.FC = () => {
-  const assignmentDemoMode = localStorage.getItem('grit_assignment_demo_mode') === 'true';
+  const assignmentDemoMode = localStorage.getItem('Panel_assignment_demo_mode') === 'true';
 
   return (
     <ToastProvider>

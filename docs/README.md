@@ -1,8 +1,8 @@
-# GRIT Interview Hub — NIAT Engineering
+# Panel Interview Hub — NIAT Engineering
 
 > *"Your next milestone starts with one conversation."*
 
-**GRIT Interview Hub** is a production-grade web application built for the **NIAT GRIT (Global Readiness Immersion Trips)** upskilling program. It automates and coordinates the live online interview milestone required for engineering students to earn official **Track Badges** across specialized technology tracks (*AI Models Mastery, Applied Generative AI Development, UI Engineering, and Data Science & Machine Learning*).
+**Panel Interview Hub** is a production-grade web application built for the **NIAT Panel** upskilling program. It automates and coordinates the live online interview milestone required for engineering students to earn official **Track Badges** across specialized technology tracks (*AI Models Mastery, Applied Generative AI Development, UI Engineering, and Data Science & Machine Learning*).
 
 ---
 
@@ -53,7 +53,7 @@
 ### Installation
 ```bash
 # Clone or navigate to the project directory
-cd "grit-interview-hub"
+cd "Panel-interview-hub"
 
 # Install dependencies
 npm install
@@ -74,9 +74,9 @@ Use the **interactive role switcher bar** at the top of the screen or test with 
 
 | Role | Persona Name | Demo Email | Focus Scenario |
 | :--- | :--- | :--- | :--- |
-| **Student** | Aarav Sharma | `student@grit.demo` | Eligible candidate; ready to book interview. |
-| **Interviewer** | Dr. Priya Ramanathan | `interviewer@grit.demo` | Senior Evaluator; manages availability & grades sessions. |
-| **Admin** | Vikram Roy | `admin@grit.demo` | Operations Lead; tracks unbooked students & reviews malpractice. |
+| **Student** | Aarav Sharma | `student@Panel.demo` | Eligible candidate; ready to book interview. |
+| **Interviewer** | Dr. Priya Ramanathan | `interviewer@Panel.demo` | Senior Evaluator; manages availability & grades sessions. |
+| **Admin** | Vikram Roy | `admin@Panel.demo` | Operations Lead; tracks unbooked students & reviews malpractice. |
 
 ### Resetting Demo Data
 Click the **"Reset Demo"** button on the top banner at any time to restore all seed records, slots, and journeys to their pristine initial state.
@@ -98,7 +98,7 @@ Click the **"Before/After Scenarios"** dropdown on the top banner to instantly p
 
 When deploying to Supabase:
 1. Create a Supabase project at [supabase.com](https://supabase.com).
-2. Execute the migration script in `supabase/migrations/20261111_grit_interview_hub.sql` via Supabase SQL Editor.
+2. Execute the migration script in `supabase/migrations/20261111_Panel_interview_hub.sql` via Supabase SQL Editor.
 3. Execute the seed script in `supabase/seed.sql`.
 4. Configure environment variables in `.env`:
 ```env
@@ -129,8 +129,8 @@ npm run build
 ---
 
 ## 📄 Submission Materials Directory
-- **Two-Page Product Design PDF:** [`docs/submission/GRIT_Interview_Hub_Product_Design.pdf`](./submission/GRIT_Interview_Hub_Product_Design.pdf)
-- **Editable Design Source:** [`docs/submission/GRIT_Interview_Hub_Product_Design.md`](./submission/GRIT_Interview_Hub_Product_Design.md)
+- **Two-Page Product Design PDF:** [`docs/submission/Panel_Interview_Hub_Product_Design.pdf`](./submission/Panel_Interview_Hub_Product_Design.pdf)
+- **Editable Design Source:** [`docs/submission/Panel_Interview_Hub_Product_Design.md`](./submission/Panel_Interview_Hub_Product_Design.md)
 - **Loom Walkthrough Script:** [`docs/submission/LOOM_WALKTHROUGH_SCRIPT.md`](./submission/LOOM_WALKTHROUGH_SCRIPT.md)
 - **Data Model Schema:** [`docs/architecture/DATA_MODEL.md`](./architecture/DATA_MODEL.md)
 - **State Machine Spec:** [`docs/architecture/STATE_MACHINE.md`](./architecture/STATE_MACHINE.md)

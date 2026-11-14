@@ -179,7 +179,7 @@ export const InterviewWorkspace: React.FC = () => {
                 <span className="font-medium text-zinc-900">{student.batch} ({student.academicYear})</span>
               </div>
               <div className="py-1.5 flex justify-between">
-                <span className="text-zinc-400">GRIT Miles</span>
+                <span className="text-zinc-400">Panel Miles</span>
                 <span className="font-medium text-zinc-900">
                   {student.milesEarned.toLocaleString()}
                 </span>

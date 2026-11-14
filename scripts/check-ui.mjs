@@ -27,7 +27,7 @@ try {
 
     for (const [user, paths] of Object.entries(routes)) {
       const demo = await browser.newContext({ viewport: { width, height: 960 } });
-      await demo.addInitScript((id) => localStorage.setItem('grit_current_user_id', id), user);
+      await demo.addInitScript((id) => localStorage.setItem('Panel_current_user_id', id), user);
       // Render existing demo screens with their fixture data, without changing app config.
       await demo.route('**/src/services/supabase/client.ts*', (route) => route.fulfill({
         contentType: 'application/javascript', body: 'export const supabase = null; export const isSupabaseConfigured = false;',

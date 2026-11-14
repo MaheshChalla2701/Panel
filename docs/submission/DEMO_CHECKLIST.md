@@ -1,5 +1,5 @@
 # Evaluator Demo Guide & Verification Checklist
-**Platform:** GRIT Interview Hub  
+**Platform:** Panel Interview Hub  
 **Target Audience:** Round 1 Assignment Evaluator & NIAT Product Leadership
 
 This document provides a recommended, sequential walkthrough to verify all 19 screens, 5 state lifecycles, and edge cases implemented in the application.
@@ -40,7 +40,7 @@ This document provides a recommended, sequential walkthrough to verify all 19 sc
 
 - [ ] **Step 4: Booking Confirmation Screen (`Screen 4`)**
   - Verify **Exact Message 2**: *"Your interview is confirmed!"*.
-  - Verify session details: Date, Time (IST), Assigned Evaluator, Meeting link, Passcode (`GRIT2026`).
+  - Verify session details: Date, Time (IST), Assigned Evaluator, Meeting link, Passcode (`Panel2026`).
   - Click **"View Interview Details"** to transition to My Interviews.
 
 - [ ] **Step 5: My Interviews & Rescheduling (`/my-interviews`)**
@@ -87,7 +87,7 @@ Use the **"Before/After Scenarios"** bar at the very top of the screen to quickl
 
 - [ ] **Step 10: Interview Workspace & Rubric Evaluation (`/interviewer/workspace/intv-2`)**
   - Click on candidate **Sneha Kulkarni** (intv-2).
-  - Review candidate profile: Qualiflyer rank, GRIT miles, verified skills.
+  - Review candidate profile: Qualiflyer rank, Panel miles, verified skills.
   - Test attendance buttons: *Checked In*, *In Progress*, *Mark Completed*, *Mark No Show*.
   - In the evaluation form:
     - Select **Pass**.

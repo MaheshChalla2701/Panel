@@ -7,13 +7,13 @@ import { isSupabaseConfigured } from '../../services/supabase/client';
 
 export const AppLayout: React.FC = () => {
   return (
-    <div className="grit-workspace min-h-screen flex flex-col text-zinc-950">
+    <div className="Panel-workspace min-h-screen flex flex-col text-zinc-950">
       {/* Interactive Demonstration Switcher Bar */}
       <BeforeAfterDemoBar />
       {isSupabaseConfigured && (
         <div className="bg-indigo-700 px-4 py-2 text-center text-xs font-medium text-white">
           Assignment demo mode is using safe local scenario data.
-          <button type="button" className="ml-3 underline underline-offset-2" onClick={() => { localStorage.removeItem('grit_assignment_demo_mode'); window.location.reload(); }}>Return to live sign-in</button>
+          <button type="button" className="ml-3 underline underline-offset-2" onClick={() => { localStorage.removeItem('Panel_assignment_demo_mode'); window.location.reload(); }}>Return to live sign-in</button>
         </div>
       )}
 

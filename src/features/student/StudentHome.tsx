@@ -153,7 +153,7 @@ export const StudentHome: React.FC = () => {
 
           <div className="flex items-center gap-4 border border-zinc-200/60 bg-zinc-50/60 px-4 py-2.5 rounded-lg">
             <div>
-              <div className="text-[10px] text-zinc-400 uppercase tracking-wider font-semibold">GRIT Miles</div>
+              <div className="text-[10px] text-zinc-400 uppercase tracking-wider font-semibold">Panel Miles</div>
               <div className="text-base font-semibold text-zinc-900">
                 {student?.milesEarned.toLocaleString() || '4,850'}
               </div>
@@ -207,7 +207,7 @@ export const StudentHome: React.FC = () => {
                 Cleared your interview!
               </div>
               <p className="text-xs text-zinc-700 leading-relaxed max-w-2xl">
-                "Congratulations! You have successfully passed your Track Badge interview. Your Specialist Badge has been awarded and your achievement has been recorded on your profile. Keep pushing forward in the GRIT competition!"
+                "Congratulations! You have successfully passed your Track Badge interview. Your Specialist Badge has been awarded and your achievement has been recorded on your profile. Keep pushing forward in the Panel competition!"
               </p>
               <div className="pt-1">
                 <Link

@@ -70,7 +70,7 @@ interface DatabaseState {
   auditLogs: AuditLog[];
 }
 
-const STORAGE_KEY = 'grit_interview_hub_db_v1';
+const STORAGE_KEY = 'Panel_interview_hub_db_v1';
 const DEMO_MEETING_LINK = 'https://meet.google.com/bot-yiqe-yne';
 
 class Repository {
@@ -86,10 +86,10 @@ class Repository {
       const data = localStorage.getItem(STORAGE_KEY);
       if (data) {
         const state = JSON.parse(data) as DatabaseState;
-        if (localStorage.getItem('grit_assignment_demo_mode') === 'true') {
+        if (localStorage.getItem('Panel_assignment_demo_mode') === 'true') {
           let updated = false;
           state.interviews = state.interviews.map((interview) => {
-            if (!interview.meetingLink.includes('meet.grit.niatindia.com/room/')) return interview;
+            if (!interview.meetingLink.includes('meet.Panel.niatindia.com/room/')) return interview;
             updated = true;
             return { ...interview, meetingLink: DEMO_MEETING_LINK };
           });
@@ -387,7 +387,7 @@ class Repository {
       allActiveBookingsForSlot: allSlotBookings,
       // The assignment demo intentionally runs against a fixed November 2026
       // scenario timeline. Production/live bookings always use the real clock.
-      requestTime: localStorage.getItem('grit_assignment_demo_mode') === 'true'
+      requestTime: localStorage.getItem('Panel_assignment_demo_mode') === 'true'
         ? new Date('2026-11-10T00:00:00.000Z')
         : undefined,
     });
@@ -412,7 +412,7 @@ class Repository {
       scheduledStart: slot.startAt,
       scheduledEnd: slot.endAt,
       meetingLink: DEMO_MEETING_LINK,
-      meetingPasscode: `GRIT${new Date(slot.startAt).getFullYear()}`,
+      meetingPasscode: `Panel${new Date(slot.startAt).getFullYear()}`,
       createdAt: nowIso,
       updatedAt: nowIso,
     };
@@ -1040,8 +1040,8 @@ class Repository {
             interviewStatus: 'SCHEDULED',
             scheduledStart: '2026-11-12T14:00:00Z',
             scheduledEnd: '2026-11-12T14:45:00Z',
-            meetingLink: 'https://meet.grit.niatindia.com/room/grit-ai-priya-0101',
-            meetingPasscode: 'GRIT2026',
+            meetingLink: 'https://meet.Panel.niatindia.com/room/Panel-ai-priya-0101',
+            meetingPasscode: 'Panel2026',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
           });

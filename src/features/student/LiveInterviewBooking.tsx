@@ -174,7 +174,7 @@ export const LiveInterviewBooking: React.FC<{ profileId?: string }> = ({ profile
         .maybeSingle();
 
       if (profileError || !profile) {
-        setError(readError(profileError, 'Could not load your GRIT profile.'));
+        setError(readError(profileError, 'Could not load your Panel profile.'));
         setIsLoading(false);
         return;
       }
